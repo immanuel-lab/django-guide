@@ -1,0 +1,23 @@
+			CLASS BASED VIEWS
+			
+			
+two types are APIVIEW and generic views
+
+
+API view allows complete control over everything..it has methods like get post put delete
+
+IN generic views we can add mixins
+
+or we can use generic views with mixins already written...with CREATEAPIVIEW,DESTROYAPIVIEW,LISTCREATEAPIVIEW ETC
+
+In Django REST Framework (DRF), generic views provide pre-built functionality for common CRUD (Create, Retrieve, Update, Delete) operations. Here's an overview of the generic views available in DRF:
+
+ListAPIView: Provides a view for listing/querying multiple instances of a model.
+CreateAPIView: Provides a view for creating a new instance of a model.
+RetrieveAPIView: Provides a view for retrieving a single instance of a model.
+UpdateAPIView: Provides a view for updating a single instance of a model.
+DestroyAPIView: Provides a view for deleting a single instance of a model.
+ListCreateAPIView: Provides a view for listing/querying multiple instances of a model and creating a new instance of the model.
+RetrieveUpdateAPIView: Provides a view for retrieving and updating a single instance of a model.
+RetrieveDestroyAPIView: Provides a view for retrieving and deleting a single instance of a model.
+RetrieveUpdateDestroyAPIView: Provides a view for retrieving, updating, and deleting a single instance of a model.

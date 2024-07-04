@@ -1,0 +1,46 @@
+QUERY SET METHODS
+
+In a model Book
+
+1.Book.objects.all()-retrieve all objects
+	Book.objects.all()[1]
+	Book.objects.all().first()
+	Book.objects.all().last()
+	Book.objects.all().count()
+	
+	
+	get a few objects for example first five
+	Book.objects.all()[1]
+	
+	
+	from django.core.paginator import Paginator
+	
+	1.USING PAGINATOR
+	books = Book.objects.all()
+	paginator = Paginator(books, 10)  # 10 items per page
+	page = paginator.page(1)
+	
+	
+	2.USING LIMIT
+	Book.objects.all().limit(10) -gets only ten
+	
+	3.using slice operator
+	books = Book.objects.all()[:10]  -first ten	
+	books = Book.objects.all()[5:10]  -five to ten
+	books = Book.objects.all()[5:]  # Get all books starting from the 5th book to the end
+	
+	
+	
+	
+
+2.Book.objects.get()
+	Get: Retrieve a single object from the database based on specific conditions using the get() method.
+
+3.Book.objects.filter()-used to filter objects
+	Book.objects.filter().exists()-to check if condtion exists
+	Person.objects.filter(age__lt=18).delete()-to delete
+	
+4.Book.objects.create()-to create a query set in db
+5.Book.objects.exclude()-exclude
+6.Book.objects.count()-count the number of objects
+7.Book.objects.update(age=30) update with conditions

@@ -1,0 +1,35 @@
+from django.db import models
+
+
+CharField: Used to store a string of characters, with a specified maximum length.
+
+TextField: Used to store longer text strings, without a specified maximum length.
+
+IntegerField: Used to store integers.
+
+FloatField: Used to store floating point numbers.
+
+BooleanField: Used to store True/False values.
+
+DateField: Used to store a date (year, month, day).
+
+DateTimeField: Used to store a date and time.
+
+TimeField: Used to store a time.
+
+EmailField: Used to store an email address, with validation to ensure it's a valid email format.
+
+FileField: Used to upload files.
+
+ImageField: Used to upload image files.
+
+ForeignKey: Used to define a many-to-one relationship to another model.
+
+ManyToManyField: Used to define a many-to-many relationship to another model.
+
+OneToOneField: Used to define a one-to-one relationship to another model.
+
+
+
+DecimalField(max_digits=10, decimal_places=2)
+models.PositiveIntegerField()

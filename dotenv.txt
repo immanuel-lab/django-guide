@@ -1,0 +1,11 @@
+pip install python-dotenv
+create .env file
+from dotenv import load_env
+
+load_env()
+os.environ('username')
+
+
+
+in .env file
+username=immanuel

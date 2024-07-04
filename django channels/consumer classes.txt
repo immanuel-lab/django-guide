@@ -1,0 +1,20 @@
+what all classes are available in channels.generic.websocket
+Meta AI
+The channels.generic.websocket module in Django Channels provides several classes for handling WebSocket connections. Here are some of the main classes available:
+1.WebSocketConsumer: This is the base class for all WebSocket consumers. It provides the basic functionality for handling WebSocket connections, including methods for handling incoming messages, sending messages, and closing the connection.
+2.AsyncWebSocketConsumer: This class is similar to WebSocketConsumer, but it provides asynchronous support using Python's async/await syntax.
+3.JsonWebsocketConsumer: This class is a subclass of WebSocketConsumer that provides additional functionality for handling JSON-encoded messages. It automatically encodes and decodes JSON messages, making it easier to work with JSON data.
+4.AsyncJsonWebsocketConsumer: This class is similar to JsonWebsocketConsumer, but it provides asynchronous support using Python's async/await syntax.
+
+
+
+
+
+These classes provide a range of functionality for handling WebSocket connections, including:
+connect: Called when the WebSocket connection is established.
+receive: Called when a message is received from the client.
+send: Sends a message to the client.
+close: Called when the WebSocket connection is closed.
+disconnect: Called when the WebSocket connection is disconnected.
+By using these classes, you can build robust and scalable WebSocket applications with Django Channels.
+

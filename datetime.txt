@@ -1,0 +1,64 @@
+
+1.create date
+ import datetime
+ 
+ datetime.date(2024,7,14)
+ 
+2.current date -datetime.date.today()
+currentdate.year
+currentdate.month
+
+
+3.getting day of week
+isoweekday()
+
+4.timedelta
+timedelta is a function in the datetime module in Python that represents a duration,
+ the difference between two dates or times. 
+It is used to calculate the difference between two dates or times.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# import datetime
+
+# d=datetime.date(2024,7,14)
+# d=datetime.date.today()
+# d=datetime.date.today().weekday()
+# d=datetime.date.today().isoweekday()
+
+# TIMEDELTA
+
+# d=datetime.date.today()
+# td=datetime.timedelta(days=7)
+
+# print(d+td)
+
+
+# calculation of current birthday
+
+# today=datetime.date.today()
+# bday=datetime.date(2024,8,6)
+# time_delta=bday-today
+# # print(time_delta)
+# # print(time_delta.days)
+# print(time_delta.total_seconds())
+
+# time=datetime.time(11,12,12)
+# print(time.hour)
+# print(time.minute)
+
+from datetime import datetime
+
+current_time = datetime.now()
+print(current_time.time())

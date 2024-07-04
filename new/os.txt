@@ -1,0 +1,45 @@
+os module
+
+
+os.system(command)- function in Python is used to execute a command in the system's shell
+
+File and Directory Operations:
+
+os.listdir(path): Returns a list of files and directories in the specified directory.
+os.mkdir(path): Creates a new directory.
+os.chdir(path):changes directory
+os.makedirs(path): Creates a directory and all intermediate directories if they don't exist.
+os.remove(path): Removes a file.
+os.rmdir(path): Removes an empty directory.
+os.removedirs(path): Removes empty directories recursively.
+os.rename(src, dst): Renames a file or directory from src to dst.
+
+
+Path Operations:
+
+os.path.exists(path): Checks whether a path exists.
+os.path.isfile(path): Checks whether the path is a file.
+os.path.isdir(path): Checks whether the path is a directory.
+os.path.join(path1, path2, ...): Joins one or more path components.
+os.path.abspath(path): Returns the absolute version of a path.
+os.path.basename(path): Returns the base name of the file or directory in a path.
+os.path.dirname(path): Returns the directory name of the path.
+
+
+
+Environment Variables:
+
+os.environ: A dictionary containing the environment variables of the current process.
+os.getenv(key, default=None): Retrieves the value of the environment variable key.
+Process Management:
+
+os.system(command): Executes the command in a subshell (deprecated; use subprocess module for more control).
+os.spawnl(mode, path, ...args): Spawns a new process.
+
+
+Miscellaneous:
+
+os.getcwd(): Returns the current working directory.
+os.chmod(path, mode): Changes the permissions of a file or directory.
+os.chown(path, uid, gid): Changes the owner and group id of path.
+os.utime(path, times): Sets the access and modified times of path.

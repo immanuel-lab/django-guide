@@ -1,0 +1,18 @@
+@api_view(['POST'])
+@login_required /from django.contrib.auth.decorators import login_required
+@throttle_classes([OncePerDayUserThrottle])
+@schema(CustomAutoSchema())
+
+@authentication_classes([SessionAuthentication, BasicAuthentication,])
+
+
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication 
+from rest_framework.permissions import IsAuthenticated
+@authentication_classes([JWTAuthentication ])
+@permission_classes([IsAuthenticated])
+
+
+
+  @action(detail=True, methods=['post'])

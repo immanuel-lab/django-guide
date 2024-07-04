@@ -1,0 +1,12 @@
+
+
+django-admin startproject proname
+
+
+python manage.py runserver
+python manage.py startapp
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py flush
+python manage.py shell

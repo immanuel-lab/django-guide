@@ -1,0 +1,7 @@
+from rest_framework.response import Response
+from rest_framework import status
+
+
+return Response(message,status)
+return Response(serializer.data)
+return Response(serializer.errors)

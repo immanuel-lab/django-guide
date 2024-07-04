@@ -1,0 +1,26 @@
+zepto models
+
+
+product categories(models.Model):
+category_image=
+category_name=
+
+
+product item(models.Model):
+category_name=foreignkey field
+product_name=charfield
+product_image=Imagefield
+description=Textfield
+manufacturer_name=charfield
+country of origin=countryfield
+manufacturer_address=textfield
+orginal_price=PositiveIntegerField
+discounted_price=PositiveIntegerField
+discount_available=booleanfield
+shelf_life=PositiveIntegerField
+
+@property(self):
+	if discount_available:
+		saved_price=original_price-discounted_price
+	return saved_price
+

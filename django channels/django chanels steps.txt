@@ -1,0 +1,98 @@
+ 
+ 1.pip install channels[daphne]
+ This will install Channels together with the Daphne ASGI application server. 
+ daphne is a WebSocket server 
+ 
+ 2.INSTALLED_APPS = (
+    "daphne",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.sites",
+    ...
+)
+
+
+3.in ASGI.PY FILE
+import os
+from django.core.asgi import get_asgi_application
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.security.websocket import AllowedHostsOriginValidator
+from django.urls import re_path
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')
+
+application = ProtocolTypeRouter({
+    'http': get_asgi_application(),
+    'websocket': AuthMiddlewareStack(
+        URLRouter([
+            re_path(r'^ws/$', YourWebSocketApp),
+        ])
+    ),
+})
+
+# Add the AllowedHostsOriginValidator to the application
+application = AllowedHostsOriginValidator(application)
+
+
+
+
+4.ASGI_APPLICATION = "myproject.asgi.application"
+
+
+
+
+5.consumers.py file
+
+
+6.routing.py file
+
+
+
+7.add channel layer config
+channel_layer.configure({
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+})
+
+
+for production redis has to be used
+
+Redis is not strictly necessary for this example, but it's a good idea to use it (or another external channel layer backend) in a production environment.
+Here's why:
+
+Persistence: Redis provides persistence for channel messages, ensuring that messages are not lost in case of a restart or failure.
+Scalability: Redis allows you to scale your channel layer horizontally, handling a large number of connections and messages.
+Performance: Redis is optimized for high-performance messaging, providing fast message dispatching and delivery.
+
+
+
+
+In contrast, the in-memory channel layer (used in the example) stores messages in memory, which means:
+Messages are lost when the server restarts or crashes.
+Scalability is limited by the amount of available memory.
+Performance may suffer under high message volumes.
+If you expect a high volume of WebSocket connections and messages, or need to ensure message persistence and reliability, consider using Redis (or another external channel layer backend) instead of the in-memory channel layer.
+However, for small-scale applications or development environments, the in-memory channel layer might be sufficient.
+
+
+
+
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
+
+websocket_urlpatterns = [
+    re_path(r'^ws/authenticated/$', consumers.AuthenticatedWebSocketConsumer),
+]
+
+channel_layer.configure({
+    'default': {
+        'BACKEND': 'channels.layers.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],  # Redis host and port
+        },
+    },
+})

@@ -1,0 +1,18 @@
+1.APPEND_SLASH=True
+The APPEND_SLASH setting in Django controls whether URLs that lack a trailing slash 
+should be automatically redirected to a URL with a trailing slash. By default, this 
+setting is True, meaning that Django will append a slash to the URL if it's not present 
+and if the URL without the trailing slash does not match any patterns but the URL with the
+ trailing slash does.
+ 
+ 
+2.PREPEND_WWW = True
+
+When PREPEND_WWW is True, if a user requests a URL that does not start with "www.",
+ Django will automatically redirect the user to the equivalent URL with "www." prefixed.
+ By default it is false.
+ 
+ 
+3.ROOT_URLCONF='MYPORJECT.urls'
+this setting specifies where your root url configurations are defined..by default it is
+<projectname>.urls

@@ -1,0 +1,10 @@
+pip install pillow
+
+and in settings file
+
+import os
+
+# for image handling
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

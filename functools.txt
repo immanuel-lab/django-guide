@@ -1,0 +1,11 @@
+ 
+
+from functools import cache
+
+@cache
+
+
+cache details
+function.cache_info()
+
+function.cache_clear()

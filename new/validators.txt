@@ -1,0 +1,63 @@
+class profile(models.Model):
+    owner=models.ForeignKey(user, on_delete=models.CASCADE)
+    age=models.IntegerField(validators=[MinValueValidator(0,message="Please enter your correct age."), MaxValueValidator(150,message="Please enter your correct age.")])
+    phone_number = models.CharField(
+        max_length=10,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{10}$',
+                message='Phone number must be a 10-digit number.'
+            )
+        ]
+    )
+    address = models.TextField()
+	
+	
+	
+from django.core.validators import MinValueValidator, MaxValueValidator,RegexValidator
+
+Django comes with several built-in validators which can be used out of the box:
+
+RegexValidator: Ensures the value matches a specific regular expression.
+EmailValidator: Ensures the value is a valid email address.
+URLValidator: Ensures the value is a valid URL.
+MaxValueValidator: Ensures the value is less than or equal to a specified maximum.
+MinValueValidator: Ensures the value is greater than or equal to a specified minimum.
+MaxLengthValidator: Ensures the value does not exceed a specified length.
+MinLengthValidator: Ensures the value is at least a specified length.
+
+
+
+
+
+
+
+
+from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+class MyModel(models.Model):
+    name = models.CharField(max_length=100, validators=[MinLengthValidator(2)])
+    age = models.IntegerField(validators=[MinValueValidator(18), MaxValueValidator(99)])
+    email = models.EmailField(validators=[EmailValidator()])
+
+	
+	
+	
+		CUSTOM VALIDATORS
+		
+		
+from django.db import models
+from django.core.validators import MinLengthValidator, MinValueValidator, MaxValueValidator, EmailValidator
+from django.core.exceptions import ValidationError  # Import ValidationError
+
+def validate_even(value):
+    if value % 2 != 0:
+        raise ValidationError('%(value)s is not an even number', params={'value': value})
+
+class Person(models.Model):
+    name = models.CharField(max_length=100, validators=[MinLengthValidator(2)])
+    age = models.IntegerField(validators=[MinValueValidator(18), MaxValueValidator(99)])
+    email = models.EmailField(validators=[EmailValidator()])
+    even_number = models.IntegerField(validators=[validate_even])
+

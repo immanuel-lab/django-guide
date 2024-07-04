@@ -1,0 +1,42 @@
+print()
+help()
+dir()
+range()
+len()
+open()
+input()
+eval()-. If you want to get input from the user with a specific data type (e.g., integer, float, etc.), you can use the eval() function.
+max() and min()-Return the maximum or minimum value in a list or other sequence.
+
+
+
+
+
+
+
+
+Meta AI
+Here are some other built-in Python functions:
+print(): Prints output to the screen.
+len(): Returns the length of a string, list, tuple, or other sequence.
+type(): Returns the data type of a variable or value.
+max() and min(): Return the maximum or minimum value in a list or other sequence.
+sum(): Returns the sum of all elements in a list or other sequence.
+range(): Generates a sequence of numbers for looping.
+chr() and ord(): Convert between characters and their ASCII codes.
+list(), tuple(), set(), and dict(): Create new instances of these data structures.
+zip(): Combines multiple lists into a list of tuples.
+enumerate(): Returns a list of tuples containing indices and values from a list.
+sorted(): Sorts a list in ascending or descending order.
+reversed(): Returns a reversed iterator over a sequence.
+all() and any(): Check if all or any elements in a list are true.
+filter(): Returns an iterator over elements in a list that meet a condition.
+map(): Applies a function to each element in a list.
+reduce(): Applies a function to each element in a list, reducing it to a single value.
+hex(), oct(), and bin(): Convert integers to hexadecimal, octal, or binary strings.
+round(): Rounds a number to a specified number of decimal places.
+pow(): Raises a number to a power.
+abs(): Returns the absolute value of a number.
+These are just a few of the many built-in functions in Python. Let me know if you have any specific questions about any of these!
+
+

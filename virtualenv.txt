@@ -1,0 +1,11 @@
+pip install virtualenv
+
+
+to create
+virtualenv envname
+
+
+
+
+to activate
+envname\Scripts\activate

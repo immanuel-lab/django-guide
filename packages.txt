@@ -1,0 +1,13 @@
+	PACKAGES
+	
+1.django
+2.rest framework
+3.django-cors-headers
+4.honey pot
+5.simple jwt 
+6.django import export
+7.python dotenv
+8.django-axes
+9.django-countries
+10.django-jazzmin
+11.django-seed

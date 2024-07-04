@@ -1,0 +1,121 @@
+In Django, decorators can be used to add functionality to model methods and properties. Beyond @property, there are several other useful decorators and patterns you can apply to Django models to enhance their behavior.
+
+Common Decorators for Django Models
+@property:
+Converts a method into a read-only attribute.
+
+python
+Copy code
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+
+    @property
+    def age(self):
+        today = date.today()
+        age = today.year - self.date_of_birth.year
+        if today.month < self.date_of_birth.month or (today.month == self.date_of_birth.month and today.day < self.date_of_birth.day):
+            age -= 1
+        return age
+
+		@cached_property:
+Caches the result of a method the first time it is accessed, to avoid recalculating it on subsequent accesses. This is useful for expensive calculations.
+
+python
+Copy code
+from django.utils.functional import cached_property
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+
+    @cached_property
+    def age(self):
+        today = date.today()
+        age = today.year - self.date_of_birth.year
+        if today.month < self.date_of_birth.month or (today.month == self.date_of_birth.month and today.day < self.date_of_birth.day):
+            age -= 1
+        return age
+
+		@classmethod:
+Defines a method that is bound to the class and not the instance of the class. These methods can be called on the class itself, rather than on an instance.
+
+python
+Copy code
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+
+    @classmethod
+    def create(cls, name, date_of_birth):
+        return cls(name=name, date_of_birth=date_of_birth)
+@staticmethod:
+Defines a method that does not access or modify the class or instance it is defined in. It behaves like a regular function but belongs to the class’s namespace.
+
+python
+Copy code
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+
+    @staticmethod
+    def is_adult(age):
+        return age >= 18
+Custom Decorators
+You can also create custom decorators to encapsulate common functionality or validation logic that you want to apply to your model methods.
+
+Custom Decorator Example:
+Suppose you want to log method calls on your model methods. You can create a decorator for this purpose.
+
+python
+Copy code
+import logging
+from functools import wraps
+
+logger = logging.getLogger(__name__)
+
+def log_method_call(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        logger.info(f'Calling method {func.__name__}')
+        return func(*args, **kwargs)
+    return wrapper
+Applying the Custom Decorator:
+
+python
+Copy code
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+
+    @log_method_call
+    def get_full_name(self):
+        return f'{self.name} (age: {self.age})'
+Using Signals as Decorators
+Django signals allow you to execute code in response to certain events, such as model saves or deletions. While not exactly a decorator, they provide similar functionality by allowing you to "decorate" actions with additional behavior.
+
+Using Signals:
+
+python
+Copy code
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=Person)
+def person_post_save(sender, instance, **kwargs):
+    logger.info(f'Person {instance.name} was saved.')
+Summary
+Using decorators in Django models can enhance the functionality and maintainability of your code. Some common patterns include:
+
+@property: For dynamic, read-only attributes.
+@cached_property: For caching the results of expensive computations.
+@classmethod: For methods that are bound to the class rather than instances.
+@staticmethod: For utility methods that do not require class or instance context.
+Custom decorators: For logging, validation, or other cross-cutting concerns.
+Signals: For handling events in a decoupled manner.
+By leveraging these decorators, you can make your Django models more powerful and easier to work with.
+
+
+
+
+

@@ -1,0 +1,30 @@
+A paginator is a utility that helps split a large collection of 
+items (like a list or a queryset) into smaller, more manageable chunks, called "pages".
+ This is useful for displaying a large number of items in a user-friendly way, without 
+ overwhelming the user or causing performance issues.
+ 
+ 
+ from django.core.paginator import Paginator
+
+books = Book.objects.all()
+paginator = Paginator(books, 10)  # 10 books per page
+
+# Get the first page
+page = paginator.page(1)
+books_on_page = page.object_list  # list of 10 books
+
+# Get the next page
+next_page = paginator.page(2)
+
+
+
+
+
+IN DRF
+
+1.GLOBAL SETTINGS
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

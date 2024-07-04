@@ -1,0 +1,126 @@
+Common Meta Options
+ordering: Specifies the default ordering for the model's QuerySet.
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+
+    class Meta:
+        ordering = ['name']
+verbose_name: A human-readable name for the object, singular form.
+
+
+class Meta:
+    verbose_name = 'person'
+verbose_name_plural: A human-readable name for the object, plural form.
+
+
+class Meta:
+    verbose_name_plural = 'people'
+db_table: The name of the database table to use for the model.
+
+
+class Meta:
+    db_table = 'person_table'
+abstract: Specifies that the model is an abstract base class.
+
+
+class Meta:
+    abstract = True
+unique_together: Enforces unique constraints on a combination of fields.
+
+python
+Copy code
+class Meta:
+    unique_together = ['first_name', 'last_name']
+Note: This option is deprecated in favor of UniqueConstraint with constraints.
+
+index_together: Creates a database index on a combination of fields.
+
+python
+Copy code
+class Meta:
+    index_together = ['first_name', 'last_name']
+Note: This option is deprecated in favor of Index with indexes.
+
+constraints: Defines custom database constraints like unique constraints.
+
+python
+Copy code
+from django.db.models import UniqueConstraint
+
+class Meta:
+    constraints = [
+        UniqueConstraint(fields=['first_name', 'last_name'], name='unique_name')
+    ]
+indexes: Specifies a list of database indexes to create.
+
+python
+Copy code
+from django.db.models import Index
+
+class Meta:
+    indexes = [
+        Index(fields=['first_name', 'last_name']),
+    ]
+permissions: Defines custom permissions for the model.
+
+python
+Copy code
+class Meta:
+    permissions = [
+        ('can_view_person', 'Can view person'),
+    ]
+default_related_name: Specifies the default name for the reverse relation from related objects back to this one.
+
+python
+Copy code
+class Meta:
+    default_related_name = 'persons'
+get_latest_by: The name of a DateField or DateTimeField in the model; this is used by the latest() method.
+
+python
+Copy code
+class Meta:
+    get_latest_by = 'created_at'
+managed: If False, Django will not create, modify, or delete the database table.
+
+python
+Copy code
+class Meta:
+    managed = False
+app_label: Specifies the name of the app this model belongs to.
+
+python
+Copy code
+class Meta:
+    app_label = 'my_app'
+Example Usage
+Here's a more comprehensive example that includes several of these options:
+
+python
+Copy code
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    date_of_birth = models.DateField()
+    email = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['last_name', 'first_name']
+        verbose_name = 'person'
+        verbose_name_plural = 'people'
+        db_table = 'person_table'
+        unique_together = [['first_name', 'last_name']]
+        indexes = [
+            models.Index(fields=['last_name', 'first_name']),
+        ]
+        permissions = [
+            ('can_view_person', 'Can view person'),
+        ]
+        get_latest_by = 'created_at'
+In this example, the Person model has various metadata options specified in the Meta class, which influence how the model behaves and is represented in the database.

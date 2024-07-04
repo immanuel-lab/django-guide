@@ -1,0 +1,42 @@
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
+from .models import Person
+from .serializers import PersonSerializer
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def person_list(request):
+    persons = Person.objects.all()
+    serializer = PersonSerializer(persons, many=True)
+    return Response(serializer.data)
+
+	
+Setting Default Renderers
+
+To set the default renderers for your entire project, you can configure them in the settings.py file:
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+   
+    ),
+}
+
+
+
+
+for browsable api
+
+
+
+	 
+	 
+	 
+	 REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+             'rest_framework.renderers.BrowsableAPIRenderer',
+   
+    ),
+}

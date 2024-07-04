@@ -1,0 +1,26 @@
+
+In Django REST Framework (DRF), caching refers to the process of storing HTTP 
+responses so that they can be reused later, thereby improving the performance and 
+scalability of your API. 
+Caching can be particularly useful when dealing with endpoints that return data that 
+
+doesn't change frequently, such as static content or data retrieved from a database that 
+is not frequently updated.
+
+
+DRF provides built-in support for caching through its @cache_page decorator, \
+which can be applied to views or viewsets to cache the responses they generate.
+ Here's how it works:
+
+Decorator Usage: You can use the @cache_page decorator to cache the output of a
+ view for a specified amount of time. For example:
+ 
+ from django.views.decorators.cache import cache_page
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+class MyAPIView(APIView):
+    @cache_page(60 * 15)  # Cache for 15 minutes
+    def get(self, request):
+        # Your view logic here
+        return Response(...)
