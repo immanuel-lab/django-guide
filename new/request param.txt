@@ -1,0 +1,50 @@
+
+
+
+request.method
+request.user
+request.user.is_authenticated
+
+
+
+request.GET:
+A dictionary-like object containing all the GET parameters. For example, if the URL is /path/?name=value, request.GET['name'] would return 'value'.
+
+
+request.POST:
+A dictionary-like object containing all the POST parameters. Used in form submissions.
+
+request.body:
+The raw HTTP request body as a byte string. Useful for processing non-form data, such as JSON payloads.
+
+
+
+request.is_secure():
+Returns True if the request was made over HTTPS.
+
+
+request.COOKIES:
+A dictionary containing all cookies sent by the client.
+
+request.session:
+A dictionary-like object for accessing and setting session data.
+
+
+request.FILES:
+A dictionary-like object containing all uploaded files. Each key is the name of the file input, and each value is an instance of UploadedFile
+
+request.content_type:
+The MIME type of the request body, such as application/json or multipart/form-data.
+
+request.path:
+The full path to the requested page, not including the domain.
+
+request.path_info:
+The path info portion of the requested URL.
+
+request.META:
+A dictionary containing all the HTTP headers sent with the request. Headers are prefixed with HTTP_. For example, the User-Agent header can be accessed via request.META['HTTP_USER_AGENT'].
+
+
+request.data (specific to Django REST Framework):
+A dictionary-like object containing all parsed content of the request body. This is useful for handling JSON, XML, or form-encoded data in API views

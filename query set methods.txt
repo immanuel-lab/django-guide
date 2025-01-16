@@ -2,6 +2,9 @@ QUERY SET METHODS
 
 In a model Book
 
+RAW SQL 
+
+Book.object.raw(sql query)
 1.Book.objects.all()-retrieve all objects
 	Book.objects.all()[1]
 	Book.objects.all().first()
@@ -37,6 +40,7 @@ In a model Book
 	Get: Retrieve a single object from the database based on specific conditions using the get() method.
 
 3.Book.objects.filter()-used to filter objects
+	 qs=Products.objects.filter(price__gt=100) dunder gt or lt for greater than or less than
 	Book.objects.filter().exists()-to check if condtion exists
 	Person.objects.filter(age__lt=18).delete()-to delete
 	
@@ -44,3 +48,60 @@ In a model Book
 5.Book.objects.exclude()-exclude
 6.Book.objects.count()-count the number of objects
 7.Book.objects.update(age=30) update with conditions
+
+
+
+
+8.MyModel.objects.annotate(year=Extract('created_at', 'year')
+			from django.db.models import Extract
+			
+	In Django, Extract is a database function that allows you to extract a specific part 
+	of a date/time field, such as the year, month, day, hour, minute, or second.
+	When you use annotate, Django adds a new attribute to each object in the queryset, 
+	without modifying the underlying database tables.This allows you to perform calculations or transformations on 
+	the data without changing the original data. 
+	
+
+9.Aggregate functions:
+	Sum: Calculates the sum of a field.
+	Count: Counts the number of objects in a queryset.
+	Avg: Calculates the average of a field.
+	Max: Returns the maximum value of a field.
+	Min: Returns the minimum value of a field.
+	
+	
+	from django.db.models import Sum
+
+	total_sales = Order.objects.aggregate(total_sales=Sum('amount'))
+	print(total_sales)  # Output: {'total_sales': 1000}
+	
+	
+10.CONDITIONAL EXPRESSIONS
+		When: Allows you to specify a conditional expression.
+		Case: A more general version of When, allowing multiple conditions.
+		
+		from django.db.models import When, Case
+
+		# Set the discount based on the price
+		discounts = Order.objects.annotate(
+			discount=Case(
+				When(price__gt=100, then='10%'),
+				When(price__gt=50, then='5%'),
+				default='0%'
+			)
+		)
+		
+		
+		However, there's a subtle difference:
+	aggregate returns a dictionary with the calculated values, without modifying the original queryset.
+	annotate adds the calculated values as temporary attributes to each object in the queryset.
+		
+		
+11.
+
+	from django.db.models import Max, Min
+
+	max_price = Product.objects.aggregate(max_price=Max('price'))
+	min_price = Product.objects.aggregate(min_price=Min('price'))
+	print(max_price)  # Output: {'max_price': 100}
+	print(min_price)  # Output: {'min_price': 20}

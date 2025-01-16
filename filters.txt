@@ -1,0 +1,42 @@
+Here are some other ways to filter a queryset using the underscore notation:
+__gt : Greater than
+Python
+qs = Products.objects.filter(price__gt=100)
+__lt : Less than
+Python
+qs = Products.objects.filter(price__lt=100)
+__gte : Greater than or equal to
+Python
+qs = Products.objects.filter(price__gte=100)
+__lte : Less than or equal to
+Python
+qs = Products.objects.filter(price__lte=100)
+__eq : Equal to (default)
+Python
+
+Python
+qs = Products.objects.filter(price__in=[100, 200, 300])
+__contains : Contains a substring
+Python
+qs = Products.objects.filter(name__contains="coke")
+__startswith : Starts with a substring
+Python
+qs = Products.objects.filter(name__startswith="co")
+__endswith : Ends with a substring
+Python
+qs = Products.objects.filter(name__endswith="ke")
+__range : Within a range
+Python
+qs = Products.objects.filter(price__range=[100, 200])
+These are just a few examples of the many lookup filters available in Django. You can find the full list in the Django documentation.
+You
+what are these called actually
+Meta AI
+These special double underscore (__) notations in Django are called lookup filters or field lookups.
+They are used to filter querysets based on various conditions, such as greater than, less than, contains, starts with, and many more.
+Here's a breakdown of the terminology:
+Field name: The name of the model field you're filtering on (e.g., price, name).
+Lookup filter: The special notation that follows the field name, starting with double underscore (__) (e.g., __gt, __contains).
+Lookup expression: The combination of the field name and lookup filter (e.g., price__gt, name__contains).
+Django provides a rich set of lookup filters to perform various queries, making it easy to filter and manipulate data in your models.
+

@@ -1,0 +1,62 @@
+Here are the methods and functions that can be used in a Django Rest Framework (DRF) serializer:
+Methods
+def create(self, validated_data):
+def update(self, instance, validated_data):
+def validate(self, data):
+def validate_<field_name>(self, value):
+def run_validation(self, data):
+def to_representation(self, instance):
+def to_internal_value(self, data):
+def get_initial(self):
+def get_fields(self):
+def get_extra_kwargs(self):
+Functions
+serializers.ValidationError
+serializers.ValidationErrors
+serializers.SerializerMethodField
+serializers.ReadOnlyField
+serializers.HyperlinkedIdentityField
+serializers.HyperlinkedRelatedField
+serializers.StringRelatedField
+serializers.PrimaryKeyRelatedField
+serializers.ManyRelatedField
+serializers.DictField
+serializers.ListField
+serializers.BooleanField
+serializers.NullBooleanField
+serializers.CharField
+serializers.EmailField
+serializers.RegexField
+serializers.SlugField
+serializers.URLField
+serializers.IPAddressField
+serializers.IntegerField
+serializers.FloatField
+serializers.DecimalField
+serializers.DateField
+serializers.DateTimeField
+serializers.TimeField
+serializers.DurationField
+serializers.ChoiceField
+serializers.MultipleChoiceField
+serializers.FileField
+serializers.ImageField
+serializers.ListSerializer
+serializers.DictSerializer
+
+
+Note that this is not an exhaustive list, and you can create custom methods and functions to suit your needs.
+
+
+
+
+is_valid(): Returns True if the data is valid, False otherwise.
+save(): Saves the validated data to the database.
+data: Returns the serialized data.
+errors: Returns a dictionary of error messages.
+validate(): Calls the serializer's validation methods.
+to_representation(): Converts the data to a native Python datatype.
+to_internal_value(): Converts the data to a format that can be used to update the instance.
+get_initial(): Returns the initial data for the serializer.
+get_fields(): Returns the fields that are used in the serializer.
+get_extra_kwargs(): Returns extra keyword arguments for the serializer fields.

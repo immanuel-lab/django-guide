@@ -1,0 +1,24 @@
+The threading module in Python provides a variety of methods for working with threads. Here are some of the most commonly used methods:
+Thread(): The constructor for creating a new thread.
+start(): Starts the thread's activity.
+run(): The method that represents the thread's activity.
+join(): Waits until the thread terminates.
+ident: Returns the thread's identifier.
+name: Returns the thread's name.
+daemon: Sets or returns the thread's daemon status.
+is_alive(): Returns whether the thread is alive.
+enumerate(): Returns a list of all active threads.
+current_thread(): Returns the current thread.
+active_count(): Returns the number of active threads.
+Lock(): Creates a new lock object.
+RLock(): Creates a new RLock object.
+Semaphore(): Creates a new semaphore object.
+BoundedSemaphore(): Creates a new bounded semaphore object.
+Condition(): Creates a new condition object.
+
+Event(): Creates a new event object.
+Timer(): Creates a new timer object.
+Some other methods in the threading module include:
+ThreadError: The base class for thread-related exceptions.
+ThreadNameError: Raised when a thread's name is not set correctly.
+currentThread: Returns the current thread.

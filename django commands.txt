@@ -1,12 +1,57 @@
 
 
-django-admin startproject proname
+django-admin startproject proname-starts a new project
+django-admin help --commands
+django-admin help runserver
 
 
-python manage.py runserver
-python manage.py startapp
-python manage.py makemigrations
+python manage.py runserver-to run the server
+python manage.py startapp-to create a new app
+python manage.py makemigrations-to make migrations of model
 python manage.py migrate
-python manage.py createsuperuser
-python manage.py flush
-python manage.py shell
+python manage.py createsuperuser-to create superuser
+python manage.py flush-to clear all data in db
+python manage.py shell-to open python shell
+
+
+python manage.py check-is used to check entire django project for problems
+python manage.py check --tag models- can specify tags t run certain types of tags
+python manage.py check --deploly run checks relavent for deployment
+
+
+
+python manage.py complilemessages-to compile .po into .mo files..part of internationalization and localization
+framework of django
+
+
+
+
+python manage.py createcachetable-to create db table for caching when using db cache backend.
+
+
+python manage.py dbshell-allows to interact with project's db connections.allows to directly interact with db using native command-line client
+
+
+
+py .\manage.py dumpdata > dumpdata.json-to dump entire db as json file
+
+py .\manage.py dumpdata appname > dumpdata.json
+
+also can specify a model 
+py .\manage.py dumpdata appname.modelname > dumpdata.json
+
+specify multiple models-
+py .\manage.py dumpdata appname.model1name appname.model1name> dumpdata.json
+
+OUTPUT FORMATS
+
+py .\manage.py dumpdata format=xml > dumpdata.xml
+py .\manage.py dumpdata format=yaml > dumpdata.yaml
+
+
+
+
+python manage.py sendtestmail [email address]-used to send a test email to verify email settings are correctly configured
+
+
+

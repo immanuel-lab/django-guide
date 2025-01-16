@@ -1,0 +1,36 @@
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # Called when the client connects to the WebSocket
+        pass
+
+    async def disconnect(self, close_code):
+        # Called when the client disconnects from the WebSocket
+        pass
+
+    async def receive(self, text_data):
+        # Called when the client sends a message to the server
+        pass
+
+    async def chat_message(self, event):
+        # Called when the server receives a message from another client
+        pass
+
+    async def chat_join(self, event):
+        # Called when a client joins the chat room
+        pass
+
+    async def chat_leave(self, event):
+        # Called when a client leaves the chat room
+        pass
+
+    async def send_message(self, message):
+        # Sends a message to the client
+        pass
+
+    async def send_join_message(self, username):
+        # Sends a join message to the client
+        pass
+
+    async def send_leave_message(self, username):
+        # Sends a leave message to the client
+        pass

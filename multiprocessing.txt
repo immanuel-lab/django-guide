@@ -1,0 +1,41 @@
+for cpu bound tasks
+
+
+Process(target, args, kwargs, name, daemon): Create a new process.
+Pool(processes, initializer, initargs, maxtasksperchild): Create a pool of worker processes.
+Manager(): Create a manager process for shared objects.
+Pipe(duplex=True): Create a pipe for inter-process communication.
+Queue(maxsize): Create a queue for inter-process communication.
+JoinableQueue(maxsize): Create a joinable queue for inter-process communication.
+Lock(): Create a lock object for synchronization.
+RLock(): Create a reentrant lock object for synchronization.
+Semaphore(value): Create a semaphore object for synchronization.
+BoundedSemaphore(value): Create a bounded semaphore object for synchronization.
+Condition(lock): Create a condition object for synchronization.
+Event(): Create an event object for synchronization.
+Barrier(parties): Create a barrier object for synchronization.
+Methods:
+Process.start(): Start the process.
+Process.join(): Wait for the process to finish.
+Process.terminate(): Terminate the process.
+Process.is_alive(): Check if the process is alive.
+Pool.apply(func, args, kwargs): Apply a function to a set of arguments.
+Pool.map(func, iterable): Apply a function to an iterable.
+Pool.starmap(func, iterable): Apply a function to an iterable with multiple arguments.
+Manager.start(): Start the manager process.
+Manager.shutdown(): Shut down the manager process.
+Pipe.send(obj): Send an object through the pipe.
+Pipe.recv(): Receive an object from the pipe.
+Queue.put(obj): Put an object in the queue.
+Queue.get(): Get an object from the queue.
+Lock.acquire(blocking): Acquire the lock.
+Lock.release(): Release the lock.
+RLock.acquire(blocking): Acquire the reentrant lock.
+RLock.release(): Release the reentrant lock.
+Semaphore.acquire(blocking): Acquire the semaphore.
+Semaphore.release(): Release the semaphore.
+Condition.wait(): Wait for the condition.
+Condition.notify(): Notify the condition.
+Event.wait(): Wait for the event.
+Event.set(): Set the event.
+Barrier.wait(): Wait for the barrier.

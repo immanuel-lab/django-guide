@@ -1,0 +1,28 @@
+
+Here are the methods that can be overridden in a Django model:
+
+def save(self, *args, **kwargs):
+def delete(self, *args, **kwargs):
+def __init__(self, *args, **kwargs):
+def clean(self):
+def validate_unique(self, exclude=None):
+def get_absolute_url(self):
+def save_base(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None):
+def delete_base(self, using=None, hard_delete=False):
+def _perform_unique_checks(self, unique_checks):
+def _perform_date_checks(self, date_checks):
+def full_clean(self, exclude=None, validate_unique=True):
+def clean_fields(self, exclude=None):
+def validate_field(self, field, value):
+
+Additionally, you can also override the following methods to customize the behavior of your model's manager:
+def create(self, **kwargs):
+def get_queryset(self):
+def get(self, *args, **kwargs):
+def filter(self, *args, **kwargs):
+def exclude(self, *args, **kwargs):
+def order_by(self, *field_names):
+def distinct(self, *field_names):
+def values(self, *field_names):
+def values_list(self, *field_names, flat=False):
+Note that this is not an exhaustive list, and you can override other methods as well to customize the behavior of your model.

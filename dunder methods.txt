@@ -1,0 +1,15 @@
+__name__   used to get the name of the object
+
+__main__    name of the current module
+
+
+
+String Representation: used for string representation of an object
+__str__: String representation (str())
+__repr__: Representation (repr())
+
+
+if __name__ == "__main__"
+
+ block is used to execute code only when the script is run directly, 
+ not when it's imported as a module in another script.
