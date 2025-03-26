@@ -28,3 +28,26 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
+
+
+
+
+
+
+
+
+2.
+from rest_framework.pagination import PageNumberPagination
+
+class ProductCategoriesPagination(PageNumberPagination):
+    page_size = 2
+   
+
+class ProductCategoriesView(generics.ListAPIView):
+    queryset=models.ProductCategories.objects.all()
+    serializer_class=serializers.ProductCategoriesSerializer
+    filter_backends=[filters.SearchFilter]
+    search_fields=['category_name']
+    pagination_class = ProductCategoriesPagination
+   
