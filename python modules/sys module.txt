@@ -1,0 +1,13 @@
+﻿							SYS MODULE
+							
+				
+1.sys.builtin_module_names
+2.sys.modules -
+3.sys.version - python version 
+4.sys.argv
+5.sys.platform -  # Outputs 'win32', 'linux', 'darwin' (macOS)
+
+6.sys.getrecursionlimit()
+7.sys.setrecursionlimit()
+
+8.quit(), exit(), sys.exit(), and os._exit() 

@@ -1,0 +1,39 @@
+import pathlib
+
+
+pathlib.Path() -make a pathlib
+
+touch() -create a file
+unlink() = remove a file
+
+path = pathlib.Path("example.txt")
+
+# Get the file name and extension
+print(path.name)  # Output: example.txt
+print(path.stem)  # Output: example
+print(path.suffix)  # Output: .txt
+
+
+
+TO WRITE TEXT
+file_path.write_text("Hello, World!")   
+
+
+
+Here are some common path operations you can perform using Pathlib:
+path.exists(): Check if a path exists.
+path.is_file(): Check if a path is a file.
+path.is_dir(): Check if a path is a directory.
+path.mkdir(): Create a new directory.
+path.rmdir(): Remove an empty directory.
+path.unlink(): Remove a file.
+path.rename(): Rename a file or directory.
+path.glob(): Find all files matching a pattern.
+
+
+Best Practices
+Use the Path class to create path objects.
+Use the / operator to join paths.
+Use the exists(), is_file(), and is_dir() methods to check the existence and type of a path.
+Use the mkdir(), rmdir(), unlink(), and rename() methods to perform common path operations.
+By following these best practices and using Pathlib's intuitive API, you can write more efficient and readable code for working with file system paths in Python.
