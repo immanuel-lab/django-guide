@@ -1,0 +1,115 @@
+5 Powerful Python Decorators to Supercharge Your Coding Workflow!
+Discover five must-know Python decorators that will streamline your coding workflow and
+ boost efficiency.
+
+
+
+
+
+
+
+Python decorators are one of the most powerful yet underutilized features of the language. 
+
+They allow you to modify the behavior of functions or classes without modifying their code,
+ making them a game-changer for writing clean, efficient, and reusable code.
+
+In this article, we’ll explore five powerful Python decorators that will supercharge your coding workflow!
+
+1. @cache — Speed Up Expensive Function Calls
+If your function performs slow, repetitive computations, you can use the @cache decorator from functools to store results and return them instantly for repeated inputs.
+
+Example: Fibonacci Without and With Caching
+Without Caching (Slow)
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2) # Takes several seconds
+With @cache (Super Fast!)
+from functools import cache
+
+@cache
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2) # Runs almost instantly!
+
+	
+	
+2. @staticmethod and @classmethod — Write Cleaner OOP Code
+In Object-Oriented Programming (OOP), methods that don’t need access to instance variables should be static methods or class methods instead of regular instance methods.
+
+Example: Static and Class Methods
+class MathUtils:
+    @staticmethod
+    def add(x, y):
+        return x + y
+
+    @classmethod
+    def description(cls):
+        return f"This is {cls.__name__} class"
+
+# Using static method
+print(MathUtils.add(3, 5))  # No need to instantiate the class
+# Using class method
+print(MathUtils.description())  # "This is MathUtils class"
+@staticmethod is used when no self or cls is needed. @classmethod works with the class itself instead of an instance and Improves code organization in OOP.
+
+
+
+
+3. @lru_cache — Optimize Expensive Function Calls Efficiently
+While @cache stores all results indefinitely, @lru_cache (Least Recently Used Cache) limits memory usage by caching only the most recent results.
+
+Example: Using @lru_cache with a Limit
+from functools import lru_cache
+import time
+
+@lru_cache(maxsize=5)  # Store only the last 5 results
+def slow_function(n):
+    time.sleep(2)  # Simulate an expensive computation
+    return n * 2
+print(slow_function(10))  # Takes 2 seconds
+print(slow_function(10))  # Instant result (cached!)
+This Avoids recalculating results, Limits memory usage with maxsize and Great for optimizing APIs, I/O operations, and recursive functions.
+
+4. @property — Make Your Attributes Read-Only
+Sometimes, you want a class attribute to behave like a method but accessed like a property — without using () when calling it.
+
+Example: Using @property
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def area(self):
+        return 3.1416 * self._radius ** 2  # Calculate only when accessed
+
+c = Circle(10)
+print(c.area)  # No need to call c.area()
+This Prevents accidental modifications of computed values, Keeps syntax clean and intuitive and Useful for lazy calculations.
+
+
+
+
+
+
+5. @retry — Automatically Handle Failures in API Calls
+If you’re working with APIs or unreliable network connections, the @retry decorator (from tenacity) automatically retries failed requests, preventing your script from breaking.
+
+Example: Retrying API Calls with @retry
+from tenacity import retry, stop_after_attempt, wait_fixed
+import requests
+
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+def fetch_data():
+    print("Trying to fetch data...")
+    response = requests.get("https://api.example.com")
+    response.raise_for_status()  # Raise error for failed requests
+    return response.json()
+fetch_data()  # Retries failed attempts up to 3 times
+It Prevents crashes due to network errors, Automatically retries failed requests and Great for APIs, web scraping, and database connections.
+
+Final Thoughts
+Python decorators simplify and enhance your workflow by making your code more efficient, reusable, and elegant.
+
+Which decorator do you use the most? Let me know in the comments!
