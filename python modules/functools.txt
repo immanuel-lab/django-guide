@@ -1,6 +1,50 @@
- 
 
-from functools import cache
+
+
+1.FUNCTOOLS.PARTIAL,PARTIAL METHOD
+
+functools.partial is a function within Python's functools module that allows for the creation 
+of "partial functions." A partial function is a new callable object derived from an existing 
+function, where some of the original function's arguments have been pre-filled or "frozen."
+
+Key characteristics and uses:
+Argument Freezing:
+functools.partial takes a function as its first argument, followed by any positional and keyword 
+arguments that should be fixed for the new partial function. When the partial function is called, these pre-filled arguments are automatically passed to the underlying function, along with any new arguments provided during the call.
+
+import functools
+
+def greet(greeting, name):
+    return f"{greeting} {name}!"
+
+# Create a new function with the greeting already set
+hello = functools.partial(greet, "Hello")
+
+print(hello("Alice"))  # Output: Hello Alice!
+print(hello("Bob"))    # Output: Hello Bob!
+
+# Create another new function with a different greeting
+goodbye = functools.partial(greet, "Goodbye")
+
+print(goodbye("Alice"))  # Output: Goodbye Alice!
+print(goodbye("Bob"))    # Output: Goodbye Bob!
+
+
+
+
+2.FROM FUNCTOOLS IMPORT REDUCE
+
+numbers = [1, 2, 3, 4, 5]
+sum_of_numbers = reduce(lambda x, y: x + y, numbers)
+print(sum_of_numbers) # Output: 15
+
+
+
+
+
+
+
+3.FROM FUNCTOOLS IMPORT CACHE,LRU_CACHE,CACHE_PROPERTY,CACHE_INFO,CACHE_CLEAR
 
 @cache
 
@@ -9,3 +53,41 @@ cache details
 function.cache_info()
 
 function.cache_clear()
+
+
+@functools.cache
+def add(a, b):
+    print(f"Calculating {a} + {b}")
+    return a + b
+	
+This is equivalent to:
+Python
+@functools.lru_cache(maxsize=None)
+def add(a, b):
+    print(f"Calculating {a} + {b}")
+    return a + b
+
+When you use @functools.cache (available in Python 3.9 and later), it's equivalent to using @functools.lru_cache(maxsize=None).
+Both decorators will cache the results of the function for all unique input arguments, without any limit on the cache size.
+In other words, @functools.cache is a shorthand for @functools.lru_cache(maxsize=None), and they behave the same way.
+
+
+
+
+
+4.FUNCTOOLS.WRAPS,FUNCTOOLS.UPDATE_WRAPPER
+-functools.wraps is a decorator that helps preserve the metadata of the original function when creating a wrapper function.
+When you create a decorator, the original function's metadata (such as its name, docstring, and annotations) can get lost. functools.wraps helps to preserve this metadata by updating the wrapper function with the original function's metadata.
+
+
+
+
+
+
+
+
+5.functools.cmp_to_key
+6.total ordering
+7.single dispatch
+
+

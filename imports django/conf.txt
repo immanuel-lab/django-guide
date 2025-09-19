@@ -1,0 +1,16 @@
+from django.conf import settings
+from django.conf import global_settings
+
+
+
+Full django.conf module structure:
+
+django.conf itself is a package, and its commonly known members are:
+
+settings – the main object for project settings.
+
+settings.configure – method to configure settings manually (rarely used in scripts or tests).
+
+global_settings – the default Django settings (used for reference).
+
+urls – django.conf.urls (actually a submodule, not directly imported from django.conf).

@@ -3,12 +3,19 @@ __name__   used to get the name of the object
 __main__    name of the current module
 
 
+__doc__: The docstring of the module, function, or class.
+__package__: The package name of the module.
+
+
+
 __init__: constructor
 
 String Representation: used for string representation of an object
 __str__: String representation (str())
 __repr__: Representation (repr())
 __len__: length of object
+__add__(self,other):what to do when + is used for two instances
+__mul__(self,other):when * is used for two instances
 
 
 if __name__ == "__main__"

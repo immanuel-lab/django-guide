@@ -1,0 +1,8 @@
+from django.urls import path,re_path,reverse(),reverse_lazy()
+
+
+
+
+reverse() → resolves immediately (when the code runs).
+
+reverse_lazy() → resolves later (only when Django actually needs the value).

@@ -1,0 +1,37 @@
+from django.db import models             # For defining models
+from django.db import connection         # For low-level database connection
+from django.db import connections        # For handling multiple database connections
+from django.db import transaction        # For atomic transactions and managing commit/rollback
+from django.db import IntegrityError     # Exception for integrity constraint violations
+from django.db import DatabaseError      # Base class for database exceptions
+from django.db import OperationalError   # Exception for operational errors (e.g., connection issues)
+from django.db import ProgrammingError   # Exception for SQL/programming errors
+from django.db import DataError          # Exception for invalid data values
+from django.db import InternalError      # Exception for internal database errors
+from django.db import models.signals     # Signals for model events (pre_save, post_save, etc.)
+from django.db import router             # Database router for multi-db setups
+from django.db import transaction         # Already mentioned; provides @atomic, savepoints, etc.
+
+
+from django.db.models import Q           # Complex queries with OR/AND
+from django.db.models import F           # Field references for updates
+from django.db.models import Count       # Aggregations
+from django.db.models import Sum         # Aggregations
+from django.db.models import Avg         # Aggregations
+from django.db.models import Max         # Aggregations
+from django.db.models import Min         # Aggregations
+
+
+
+
+
+
+
+transaction.on_commit is a function that registers a callback to run after a successful database transaction commits.
+
+It only runs if the transaction succeeds.
+
+If the transaction is rolled back, the callback never r
+
+
+

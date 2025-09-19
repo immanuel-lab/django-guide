@@ -1,0 +1,56 @@
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+
+1. SECURE_SSL_REDIRECT = True
+Purpose: Redirects all HTTP requests to HTTPS.
+Effect: When a user visits your site using HTTP (insecure), Django will redirect them to the HTTPS (secure) version of the page.
+Why: This ensures that all communication between the client and server is encrypted, protecting sensitive data.
+
+
+2. SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+Purpose: Specifies the header that indicates HTTPS requests when behind a proxy server.
+Effect: When a proxy server forwards requests to your Django application, this setting tells Django to trust the X-Forwarded-Proto header and determine whether the original request was HTTPS.
+Why: This is necessary when using a load balancer or proxy server that terminates SSL/TLS connections.
+
+3. SESSION_COOKIE_SECURE = True
+Purpose: Ensures that session cookies are transmitted over HTTPS only.
+Effect: When a user logs in or interacts with your site, the session cookie will be set with the Secure flag, indicating that it should only be transmitted over HTTPS.
+Why: This prevents attackers from intercepting session cookies over insecure connections.
+
+
+4. CSRF_COOKIE_SECURE = True
+Purpose: Ensures that CSRF cookies are transmitted over HTTPS only.
+Effect: Similar to SESSION_COOKIE_SECURE, this setting sets the Secure flag on CSRF cookies, ensuring they're only transmitted over HTTPS.
+Why: This prevents attackers from intercepting CSRF tokens over insecure connections.
+
+
+5.SECURE_HSTS_SECONDS = 31536000 # 1 year
+Purpose: Enables HTTP Strict Transport Security (HSTS) for a specified duration.
+Effect: When a user visits your site, the browser will cache the HSTS header for the specified duration (1 year in this case). During this time, the browser will automatically upgrade any HTTP requests to HTTPS.
+Why: This helps prevent man-in-the-middle attacks and ensures that users access your site over HTTPS even if they type http:// in the URL bar.
+
+6.SECURE_CONTENT_TYPE_NOSNIFF = True
+Purpose: Prevents browsers from MIME-sniffing a response away from the declared content-type.
+Effect: When a browser receives a response from your site, it will respect the Content-Type header and not attempt to guess the content type.
+Why: This helps prevent certain types of attacks, such as MIME-sniffing attacks, where an attacker tries to trick the browser into interpreting a malicious file as a different type.
+
+
+
+7.SECURE_BROWSER_XSS_FILTER = True
+Purpose: Enables the XSS filter in browsers that support it.
+Effect: When a browser receives a response from your site, it will enable its built-in XSS filter, which can help detect and prevent certain types of XSS attacks.
+Why: This provides an additional layer of protection against XSS attacks.
+
+
+
+8.X_FRAME_OPTIONS = 'DENY'
+Purpose: Specifies whether a page can be iframed.
+Effect: When a browser receives a response from your site, it will prevent the page from being framed by another site (i.e., it will not allow your site to be iframed).
+Why: This helps prevent clickjacking attacks, where an attacker tries to trick a user into performing an unintended action by framing your site.

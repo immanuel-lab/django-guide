@@ -1,0 +1,23 @@
+Djoser Endpoints:
+Djoser provides a range of endpoints for user authentication and management. Here are all the available endpoints:
+/users/: List of all users (requires admin permissions)
+/users/me/: Current user details
+/users/confirm/: Confirm user registration
+/users/resend_activation/: Resend activation email
+/users/set_password/: Set new password
+/users/reset_password/: Reset password
+/users/reset_password_confirm/: Confirm password reset
+/users/set_username/: Set new username
+/users/reset_username/: Reset username
+/users/reset_username_confirm/: Confirm username reset
+/token/login/: Obtain a token by providing valid credentials
+/token/logout/: Invalidate the token
+JWT Endpoints (if using rest_framework_simplejwt):
+/jwt/create/: Obtain a JWT by providing valid credentials
+/jwt/refresh/: Refresh a JWT
+/jwt/verify/: Verify a JWT
+Endpoint Details:
+Some endpoints require authentication or admin permissions.
+Some endpoints require specific data to be sent in the request body (e.g., username, password, new_password, etc.).
+The exact endpoint URLs may vary depending on your project's URL configuration.
+By using these endpoints, you can manage user authentication and accounts in your Django Rest Framework application.

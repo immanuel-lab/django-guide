@@ -1,0 +1,54 @@
+
+
+
+
+
+DJOSER = {
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'SERIALIZERS': {
+        'user_create': 'path.to.CustomUserCreateSerializer',
+        'user': 'path.to.CustomUserSerializer',
+    },
+    'LOGIN_FIELD': 'email',
+    'USER_ID_FIELD': 'pk',
+    'HIDE_USERS': False,
+    'PERMISSIONS': {
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
+    },
+}
+
+
+
+
+1. USER_CREATE_PASSWORD_RETYPE
+Purpose: Require users to retype their password when creating a new account.
+Value: True or False
+Default: False
+Effect: If True, the user will be required to provide a re_password field when creating a new account, which must match the password field.
+2. SEND_ACTIVATION_EMAIL
+Purpose: Send an activation email to new users.
+Value: True or False
+Default: False
+Effect: If True, Djoser will send an activation email to new users with a link to activate their account.
+3. ACTIVATION_URL
+Purpose: Specify the URL pattern for account activation.
+Value: A string with placeholders for uid and token
+Default: activate/{uid}/{token}
+Effect: The uid and token placeholders will be replaced with the actual values when generating the activation URL.
+4. PASSWORD_RESET_CONFIRM_URL
+Purpose: Specify the URL pattern for password reset confirmation.
+Value: A string with placeholders for uid and token
+Default: password/reset/confirm/{uid}/{token}
+Effect: The uid and token placeholders will be replaced with the actual values when generating the password reset confirmation URL.
+5. SERIALIZERS
+Purpose: Customize the serializers used by Djoser.
+Value: A dictionary with serializer keys and custom serializer classes
+Default: None
+Effect: You can override the default serializers used by Djoser with your own custom serializers.
+Example Use Cases:
+If you want to require users to retype their password when creating a new account, set USER_CREATE_PASSWORD_RETYPE to True.
+If you want to send an activation email to new users, set SEND_ACTIVATION_EMAIL to True and configure the ACTIVATION_URL setting.
+If you want to customize the URL patterns for account activation or password reset confirmation, modify the ACTIVATION_URL or PASSWORD_RESET_CONFIRM_URL settings.

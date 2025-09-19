@@ -1,0 +1,6 @@
+OPERATOR MODULE PYTHON
+
+
+The operator module in Python provides functions that correspond to the operators of Python.
+These functions can be used to perform operations such as arithmetic, comparison, logical 
+operations, and more.

@@ -1,0 +1,24 @@
+WHAT IS LOADER
+
+
+
+In Python, a loader is an object responsible for loading modules. It's a crucial part 
+of the import mechanism, which allows Python to find and load modules dynamically.
+
+
+Types of Loaders
+
+There are several types of loaders in Python, including:
+
+
+SourceFileLoader: Loads modules from source files (.py files).
+SourcelessFileLoader: Loads modules from compiled bytecode files (.pyc files).
+ExtensionFileLoader: Loads modules from C extension files (.so or .pyd files).
+NamespaceLoader: Loads namespace packages.
+
+
+Loader Responsibilities
+A loader's primary responsibilities include:
+Finding modules: Locating modules in the file system or other storage.
+Loading module code: Reading and executing the module's code.
+Creating module objects: Creating a module object that represents the loaded module.

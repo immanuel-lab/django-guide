@@ -1,0 +1,44 @@
+User Models in Django
+
+
+Django provides several ways to create user models, each with its own characteristics. Here are three types of user models:
+
+
+
+1. AbstractBaseUser
+AbstractBaseUser is a base class that provides the basic functionality for user models.
+It includes fields like password, last_login, and is_active.
+You can subclass AbstractBaseUser to create a custom user model with additional fields.
+When using AbstractBaseUser, you need to define the USERNAME_FIELD and REQUIRED_FIELDS attributes.
+Example:
+Python
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        # Create a user instance
+        pass
+
+class CustomUser(AbstractBaseUser):
+    email = models.EmailField(unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    objects = CustomUserManager()
+	
+	
+2. AbstractUser
+AbstractUser is a subclass of AbstractBaseUser that includes additional fields like username, first_name, last_name, and email.
+It provides a more complete user model that can be subclassed to add custom fields.
+When using AbstractUser, you can customize the user model by adding or removing fields.
+Example:
+Python
+from django.contrib.auth.models import AbstractUser
+
+class CustomUser(AbstractUser):
+    phone_number = models.CharField(max_length=20)
+	
+	
+	
+3. BaseUser
+There is no BaseUser class in Django's authentication system. The base classes are AbstractBaseUser and AbstractUser.
+In summary, AbstractBaseUser provides the basic functionality for user models, while AbstractUser provides a more complete user model that can be customized. When creating a custom user model, you can choose to subclass either AbstractBaseUser or AbstractUser depending on your needs.

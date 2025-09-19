@@ -9,11 +9,20 @@ eval()-. If you want to get input from the user with a specific data type (e.g.,
 max() and min()-Return the maximum or minimum value in a list or other sequence.
 
 
+hash()=The hash() function in Python is a built-in function that returns the hash value of an object. 
+This hash value is an integer that serves as a unique identifier for the object within a 
+specific execution of the Python interpreter. The hash() function only works with hashable objects. Hashable objects are immutable, meaning their value cannot change
+ after creation
+
+id()-The primary use of id() is to determine if two variables or expressions refer to the exact
+ same object in memory, rather than just having the same value
+
+iter()=The iter() function in Python is a built-in function used to obtain an iterator object from an iterable.
+
+next()=The next() function in Python is a built-in function used to retrieve the next item from an iterator. It is fundamental to how iteration works in Python. 
 
 
-
-
-
+super()=access properties of parent class
 
 Meta AI
 Here are some other built-in Python functions:

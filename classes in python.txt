@@ -1,0 +1,135 @@
+CLASSES IN PYTHON
+
+
+
+
+class MyClass:
+    def __init__(self, attribute1, attribute2):
+        self.attribute1 = attribute1
+        self.attribute2 = attribute2
+		
+
+//Creating an Object		
+
+obj = MyClass("Hello", "World")
+print(obj.attribute1)
+
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self, message):
+        print(f"{message}, my name is {self.name}")
+
+person = Person("Alice")
+person.greet("Hi")  # Output: Hi, my name is Alice
+person.greet("Hello")  # Output: Hello, my name is Alice
+
+
+
+
+DUNDER METHODS
+
+__init__: constructor
+
+String Representation: used for string representation of an object
+__str__: String representation (str())
+__repr__: Representation (repr())
+
+
+__add__(self,other):what to do when + is used for two instances
+__mul__(self,other):when * is used for two instances
+
+
+
+class Person:
+    def __init__(self, name):
+        self._name = name
+
+    def get_name(self):
+        return self._name
+
+person = Person("John")
+print(person.get_name())  # Output: John
+
+
+
+class Person:
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+person = Person("John")
+print(person.name)  # Output: John
+person.name = "Jane"
+print(person.name)  # Output: Jane
+
+
+
+
+
+
+
+In Python, class variables and instance variables are two types of variables that can be defined inside a class. The key difference between them lies in their scope and accessibility.
+
+
+CLASS VARIABLES:
+Are shared among all instances of a class.
+Are defined at the class level.
+Are used when the variable's value doesn't change from one instance to another.
+
+
+INSTANCE VARIABLES:
+Are unique to each instance of a class.
+Are defined inside methods, typically __init__.
+Are used when the variable's value can vary between instances.
+
+
+
+
+METHOD TYPES
+
+1. INSTANCE METHODS:
+These are the most common type of method.
+They operate on specific instances (objects) of the class.
+They receive the instance itself as the first argument, conventionally named self.
+They can access and modify the instance's attributes.
+
+
+2.CLASS METHODS
+Class Methods:
+They are associated with the class itself, not a particular instance.
+They receive the class itself as the first argument, conventionally named cls.
+They can access and modify class-level attributes.
+They are often used as factory methods or alternative constructors.
+They are defined using the @classmethod decorator.
+
+
+3. STATIC METHODS:
+They are not bound to either the class or an instance.
+They don't receive any implicit first argument (self or cls).
+They are essentially utility functions that belong to the class's namespace.
+They cannot access or modify instance or class attributes directly.
+They are defined using the @staticmethod decorator.
+
+4.PROPRTY METHODS
+They provide a way to access an instance's attributes with getter, setter, and deleter methods.
+They are defined using the @property decorator.
+
+
+5.MAGIC METHODS (Dunder Methods):
+These are special methods with double underscores at the beginning and end of their names (e.g., __init__, __str__, __add__).
+They are used to define how objects behave in various operations, like initialization, string conversion, and arithmetic.
+
+
+
+
+
