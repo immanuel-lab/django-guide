@@ -1,0 +1,154 @@
+Use Serializer for full control.
+
+Use ModelSerializer for quick model-based serialization.
+
+Use validation methods to enforce rules.
+
+Use SerializerMethodField for computed or custom fields.
+
+
+ModelSerializer vs Serializer
+
+With Serializer → you must define fields + create() + update() yourself.
+
+With ModelSerializer → DRF auto-generates fields from your model and also implements 
+create() and update() for you
+
+
+from rest_framework import serializers
+
+class BookSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=200)
+    author = serializers.CharField(max_length=100)
+    published_date = serializers.DateField()
+
+    def create(self, validated_data):
+        return Book.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.author = validated_data.get('author', instance.author)
+        instance.published_date = validated_data.get('published_date', instance.published_date)
+        instance.save()
+        return instance
+		
+		
+Unlike ModelSerializer, the plain Serializer doesn’t know about your database models.
+
+It only defines fields and handles validation.
+
+But when you call serializer.save(), DRF expects:
+
+How to create a new instance? → create()
+
+How to update an existing instance? → update()
+
+If you don’t implement them, you’ll get a NotImplementedError when calling .save().
+
+create() → defines how to insert a new object into DB.
+
+update() → defines how to modify an existing object.
+
+Both are mandatory for serializers.Serializer because it has no knowledge of your models by default.
+
+
+Serializer	Use case
+Serializer	        Fully manual, any Python object
+ModelSerializer	       Auto-generate fields from model, default create/update
+HyperlinkedModelSerializer	    ModelSerializer + hyperlinks instead of PKs
+ListSerializer	Handles many=True bulk serialization
+Custom serializers	For APIs with unusual structures or complex validation
+
+
+
+HyperlinkedModelSerializer
+
+
+class BookSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['url', 'title', 'author']  # 'url' must be included
+
+		
+		
+Similar to ModelSerializer but uses hyperlinks instead of primary keys for related objects.
+
+Good for REST APIs that follow HATEOAS style.
+
+ModelSerializer + hyperlinks instead of PKs
+
+
+1️. Primary Key (PK) style
+
+By default, ModelSerializer shows related objects using primary keys.
+
+Example:
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey('Author', on_delete=models.CASCADE)
+
+
+Using ModelSerializer:
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'author']
+
+
+Serialized output:
+
+{
+  "id": 1,
+  "title": "Django REST",
+  "author": 3   # <--- just the PK of the related author
+}
+
+
+Problem: the client only sees 3 and must know separately how to fetch the author details.
+
+2️ ..Hyperlink style
+
+HyperlinkedModelSerializer replaces PKs with URLs to the resource.
+
+class BookSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['url', 'title', 'author']  # 'url' is auto-added
+
+
+Serialized output:
+
+{
+  "url": "http://example.com/books/1/",       # link to this book
+  "title": "Django REST",
+  "author": "http://example.com/authors/3/"   # link to related author
+}
+
+
+Now the client can directly follow the URL to get full author details.
+
+This is the HATEOAS style — API navigation via hyperlinks.
+
+3️..Advantages of Hyperlinks
+PK Style	Hyperlink Style
+author: 3	author: "http://example.com/authors/3/"
+Client must know URL	URL is provided by API automatically
+Less RESTful	Fully navigable REST API
+Harder to maintain	Easier client-server decoupling
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

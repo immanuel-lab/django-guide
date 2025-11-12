@@ -1,0 +1,53 @@
+If you look at any change list in the admin, you’ll see this feature in action; Django ships with a 
+“delete selected objects” action available to all models. 
+
+The “delete selected objects” action uses QuerySet.delete() for efficiency reasons, which has an important caveat: your model’s delete() method will not be called.
+
+If you wish to override this behavior, you can override ModelAdmin.delete_queryset() or write a custom action which does deletion in your preferred manner – for example, by calling Model.delete() for each of the selected items.
+
+For more background on bulk deletion, see the documentation on object deletion.
+
+
+
+
+Admin actions let you perform an operation on multiple selected records at once from the Django admin list page.
+
+Example:
+
+Delete selected items (default)
+
+Mark selected books as published
+
+Export selected users to CSV
+
+Send email to selected members
+
+
+
+
+@admin.action(description="Mark selected books as Published") //for a custom name in actions dropdown 
+ 
+def mark_as_published(self,request,queryset):
+     queryset.update(status=Order.orderstatus.Shipped ) //Comes from Textchoices in models Mainclass.subclass.field
+	 
+	 
+	 
+	 
+	 
+  actions = ["make_published"]
+  
+  
+  
+  
+  
+  
+  
+  
+  @admin.action(description="Mark selected books as Published")
+    def make_published(self, request, queryset):
+        updated = queryset.update(status="P")
+        self.message_user(
+            request,
+            f"{updated} book(s) were successfully marked as Published.",
+            level=messages.SUCCESS
+        )

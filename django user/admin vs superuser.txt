@@ -1,0 +1,73 @@
+1️⃣ Superuser
+
+A superuser is a user account that has all permissions in Django automatically.
+
+Key points:
+
+is_superuser = True
+
+Can do anything, including create, edit, delete any model regardless of specific model 
+permissions.
+
+Usually created via python manage.py createsuperuser or via create_superuser() 
+in your manager.
+
+Works even if is_staff=False, but practically, you usually set is_staff=True so the
+ superuser can access the admin site.
+
+Fields involved:
+
+is_superuser → grants all permissions
+
+is_staff → allows admin site login
+
+is_active → enables account
+
+
+2️⃣ Admin user / staff user
+
+A staff user is a user who can log into the Django admin.
+
+Key points:
+
+is_staff = True
+
+Can access the admin interface but can only perform actions allowed by their permissions.
+
+May have limited permissions on some models.
+
+Not necessarily a superuser — can be a normal user with specific admin privileges.
+
+Fields involved:
+
+is_staff → must be True to access /admin/
+
+is_active → enables account
+
+Permissions assigned via groups or user_permissions
+
+🔹 Example
+User Type	is_staff	is_superuser	Admin access	Permissions
+Superuser	True	True	Yes	All permissions automatically
+Staff/Admin	True	False	Yes	Only permissions assigned
+Normal User	False	False	No	Only assigned permissions
+🔹 Important notes
+
+is_staff = can access admin site
+
+is_superuser = has all permissions, bypassing checks
+
+You can have:
+
+is_staff=True, is_superuser=False → limited admin user
+
+is_staff=True, is_superuser=True → full superuser
+
+is_staff=False, is_superuser=True → technically a superuser but cannot log in to admin
+
+✅ Summary
+
+Superuser = has all permissions (can override everything)
+
+Admin/staff user = can log into the admin, but permissions are limited unless also superuser
+

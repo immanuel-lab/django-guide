@@ -1,0 +1,7 @@
+python manage.py shell
+Then inside the shell:
+
+python
+Copy code
+from admin_honeypot.models import LoginAttempt
+LoginAttempt.objects.all().delete()

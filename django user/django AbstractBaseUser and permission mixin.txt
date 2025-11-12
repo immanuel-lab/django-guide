@@ -1,0 +1,93 @@
+What is PermissionsMixin in Django?
+
+PermissionsMixin is a Django mixin class that adds permission handling fields and methods 
+to your custom user model.
+
+It doesn’t stand alone — you combine it with AbstractBaseUser (or sometimes your own base
+ class) when you need groups, permissions, and superuser behavior.
+
+What does it provide?
+
+Fields
+
+is_superuser → Boolean (superuser has all permissions).
+
+groups → Many-to-many relation to auth.Group.
+
+user_permissions → Many-to-many relation to auth.Permission.
+
+
+PermissionsMixin only adds:
+
+is_superuser
+
+groups
+
+user_permissions
+
+Methods / Properties
+
+get_group_permissions(obj=None)
+
+get_all_permissions(obj=None)
+
+has_perm(perm, obj=None)
+
+has_perms(perm_list, obj=None)
+
+has_module_perms(app_label)
+
+
+.....
+
+is_superuser flag makes all of the above always return True.
+
+These methods are used by Django’s authentication and authorization system (request.user.has_perm(...), the admin, DRF permission checks, etc.).
+
+Example use
+
+When you build a custom user with AbstractBaseUser, you typically add PermissionsMixin:
+
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.db import models
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = BaseUserManager()
+
+    def __str__(self):
+        return self.email
+
+
+Now this CustomUser has:
+
+is_superuser field
+
+groups and user_permissions
+
+Working permission methods (so it plays nicely with Django admin).
+
+🚩 Without PermissionsMixin
+
+If you only inherit from AbstractBaseUser (and not PermissionsMixin):
+
+No is_superuser
+
+No groups / user_permissions
+
+Permission checks (has_perm) won’t work
+
+User won’t be recognized properly in the admin.
+
+That’s why most production custom user models use both:
+AbstractBaseUser (for minimal base) + PermissionsMixin (for permissions system).
+
+✅ Summary:
+PermissionsMixin is what gives your user model superuser, groups, and permission methods so that Django’s built-in admin and authorization system works. Without it, you’d need to re-implement all permission logic manually.
+

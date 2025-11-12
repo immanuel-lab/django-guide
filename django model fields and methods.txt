@@ -33,3 +33,36 @@ OneToOneField: Used to define a one-to-one relationship to another model.
 
 DecimalField(max_digits=10, decimal_places=2)
 models.PositiveIntegerField()
+
+
+
+
+
+
+
+
+METHODS IN model.Model
+
+
+Here are the methods that can be overridden in a Django model:
+
+def __str__(self):
+def save(self, *args, **kwargs):
+def delete(self, *args, **kwargs):
+def __init__(self, *args, **kwargs):
+def clean(self):
+def validate_unique(self, exclude=None):
+def get_absolute_url(self):
+def save_base(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None):
+def delete_base(self, using=None, hard_delete=False):
+def _perform_unique_checks(self, unique_checks):
+def _perform_date_checks(self, date_checks):
+def full_clean(self, exclude=None, validate_unique=True):
+def clean_fields(self, exclude=None):
+def validate_field(self, field, value):
+
+
+
+Manager methods:
+def get_queryset(self):
+def create(self, **kwargs):

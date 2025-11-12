@@ -1,0 +1,29 @@
+Why BaseUserManager is needed
+
+
+
+
+
+The manager (e.g., CustomUserManager) is responsible for:
+
+Creating users and superusers correctly (create_user, create_superuser).
+
+Handling any logic needed when saving a user, like hashing passwords.
+
+Providing query access to your user model (CustomUser.objects.all(), .filter(), etc.).
+
+It does not define fields — it just manipulates them.
+
+
+
+
+When you create your own user model (especially with AbstractBaseUser), 
+Django no longer knows:
+
+How to create a regular user
+
+How to create a superuser
+
+What fields are required (e.g. email, username, etc.)
+
+That’s where BaseUserManager comes in. It provides a foundation for writing a custom manager that knows how to create your users properly.

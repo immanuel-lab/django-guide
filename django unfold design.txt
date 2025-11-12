@@ -1,0 +1,8 @@
+DJANGO UNFOLD-DESIGN FOR ADMIN PANEL
+
+
+1.pip install django-unfold
+
+2.add 'unfold' in installed apps
+
+3.from unfold.admin import ModelAdmin

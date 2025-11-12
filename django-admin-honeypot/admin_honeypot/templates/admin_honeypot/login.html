@@ -1,0 +1,57 @@
+ {% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block content %}
+  <div id="content-main">
+
+    {% if form.errors %}
+      <div class="errornote" style="font:13px;font: weight 700px;;border:1px solid #E46464;  color:#E35F5F; padding:8px 12px; margin:0px 0px 20px; border-radius:5px;">
+        <p>
+      {% trans "Please enter the correct username and password " %}
+        {% trans "for a staff account.Note that both fields may be " %} 
+        {% trans "case-sensitive" %} 
+    </p>
+    </div>
+
+   
+
+    {% endif %}
+
+    <form action="" method="post" id="login-form">
+      {% csrf_token %}
+
+      <div class="form-row">
+        {% if form.username.errors %}
+          <div class="errorlist" style="color:#ba2121;">{{ form.username.errors }}</div>
+        {% endif %}
+        <label for="{{ form.username.id_for_label }}">{% trans 'Username:' %}</label>
+        {{ form.username }}
+      </div>
+
+      <div class="form-row">
+        {% if form.password.errors %}
+          <div class="errorlist" style="color:#ba2121;">{{ form.password.errors }}</div>
+        {% endif %}
+        <label for="{{ form.password.id_for_label }}">{% trans 'Password:' %}</label>
+        {{ form.password }}
+      </div>
+
+      <div class="submit-row">
+        <input type="submit" value="{% trans 'Log in' %}">
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+
+
+
+
+     
+
+
+
+
+
+     

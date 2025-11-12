@@ -1,0 +1,32 @@
+from django.contrib import admin
+from .models import SecretModel
+
+@admin.register(SecretModel)
+class SecretModelAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "created_at")
+
+    # Only staff users see the module in admin
+    def has_module_permission(self, request):
+        return request.user.is_staff
+
+    # Only staff users can view/add/change/delete
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
+
+    def has_add_permission(self, request):
+        return request.user.is_staff
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_staff
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_staff
+
+		
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
+
+@method_decorator(staff_member_required, name='dispatch')
+class StaffOnlyView(TemplateView):
+    template_name = "staff_page.html"

@@ -1,0 +1,109 @@
+Django ModelAdmin Cheat Sheet
+
+1.List View
+
+list_display
+list_display_links
+list_per_page
+list_max_show_all
+list_select_related
+ordering
+date_hierarchy
+paginator
+sortable_by
+empty_value_display
+
+
+
+What fields work well in list_filter?
+Field                         Type	Behavior
+CharField with choices	         Shows dropdown choices ✅
+BooleanField	                  Shows Yes / No filter ✅
+DateField / DateTimeField	       Shows date range filters ✅
+ForeignKey	                       Shows select list of related objects ✅
+IntegerField	⚠                  Shows choices only if small set (e.g., pages won’t auto filter well)
+
+
+2.Filters & Search
+list_filter
+search_fields
+search_help_text-adds title
+
+
+3.Form Layout-used in forms admin
+fields
+exclude
+readonly_fields-cannot edit
+raw_id_fields-
+fieldsets
+prepopulated_fields
+form
+formfield_overrides
+filter_horizontal
+filter_vertical
+radio_fields
+autocomplete_fields
+
+
+
+
+What raw_id_fields Does
+
+Normally, if a model has a ForeignKey, Django shows a dropdown:
+
+Author:  [ dropdown containing 5000 names ]  ❌ slow + heavy
+
+
+If your related table is large, this dropdown becomes:
+
+slow to load
+
+hard to search
+
+raw_id_fields changes it to:
+
+Author: [   24   ]  🔍
+Where:
+
+24 is the ID of the selected Author
+
+Clicking the 🔍 lookup icon opens a mini search window
+
+both raw_id_fields and autocomplete_fields only work when the field is a ForeignKey or ManyToManyField.
+
+They do NOT work for normal fields (CharField, IntegerField, etc.).
+
+
+
+4.Inlines
+inlines
+
+5.Actions
+actions               -adding actions(1.None remove the actions bar)
+actions_on_top         -False remove action button on top
+actions_on_bottom       -True adds actions button on bottom
+actions_selection_counter -False removes the counter
+
+
+6.Permissions
+has_add_permission()       # METHOD
+has_change_permission()    # METHOD
+has_delete_permission()    # METHOD
+has_view_permission()      # METHOD
+
+
+7.Save / Delete Hooks
+save_model()               # METHOD
+save_related()             # METHOD
+delete_model()             # METHOD
+delete_queryset()          # METHOD
+
+8.Query Overrides
+get_queryset()  
+
+9.Admin Page Views
+add_view()                 # METHOD
+change_view()              # METHOD
+changelist_view()          # METHOD
+delete_view()              # METHOD
+history_view()             # METHOD

@@ -1,0 +1,103 @@
+ models.py
+from django.db import models
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+	
+	
+	
+admin.py
+
+registering
+
+from django.contrib import admin
+from .models import Book
+
+admin.site.register(Book)
+
+
+FOR CUSTOMIZING
+
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author')  # Fields to display in the admin list view
+    search_fields = ('title', 'author')  # Fields to search by
+
+admin.site.register(Book, BookAdmin)
+
+
+1.list_filter: Allows filtering by specific fields in the admin list view.
+Python
+list_filter = ('author', 'published_date')
+
+2.ordering: Specifies the default ordering of objects in the admin list view.
+Python
+ordering = ('title', '-published_date')
+
+3.readonly_fields: Makes specified fields read-only in the admin detail view.
+Python
+readonly_fields = ('created_at', 'updated_at')
+
+4.fields: Specifies the order of fields in the admin detail view.
+Python
+fields = ('title', 'author', 'content')
+
+
+5.fieldsets: Allows grouping fields into sections in the admin detail view.
+Python
+fieldsets = (
+    (None, {'fields': ('title', 'author')}),
+    ('Content', {'fields': ('content',)}),
+)
+
+6.filter_horizontal: Improves the interface for ManyToManyField in the admin detail view.
+Python
+filter_horizontal = ('categories',)
+
+7.raw_id_fields: Changes the ForeignKey widget to a simple input field for entering the ID.
+Python
+raw_id_fields = ('author',)
+
+8.autocomplete_fields: Enables autocomplete functionality for ForeignKey or ManyToManyField.
+Python
+autocomplete_fields = ('author',)
+
+9.actions: Allows defining custom actions for selected objects in the admin list view.
+Python
+actions = ['mark_as_published']
+
+def mark_as_published(self, request, queryset):
+    queryset.update(status='published')
+	
+	
+	
+	
+	
+	
+	
+Common Methods in ModelAdmin
+get_queryset(self, request): Returns the queryset of objects to be displayed in the admin list view. It can be overridden to customize how objects are fetched or filtered.​
+
+get_list_display(self, request): Allows dynamic modification of the list of fields shown in the admin list view.​
+
+get_search_fields(self, request): Used to define search fields dynamically based on the request.​
+
+get_list_filter(self, request): Specifies filters for the right sidebar on the change list page.​
+
+get_urls(self): Used to add custom views to the admin interface for your model.​
+
+get_actions(self, request): Returns the actions available for the current request, allowing actions to be conditionally enabled/disabled per user or request.​
+
+save_model(self, request, obj, form, change): Called when an object is created or updated via the admin. Used to customize how the object is saved.​
+
+delete_model(self, request, obj): Called when an object is deleted in the admin. Used for custom deletion logic.​
+
+has_add_permission(self, request): Controls whether the "add" button is visible to the requesting user.​
+
+has_change_permission(self, request, obj=None): Determines if a user can change a specific object.​
+
+has_delete_permission(self, request, obj=None): Determines if a user can delete a specific object.​
+
+log_addition(self, request, obj, message), log_change(self, request, obj, message), log_deletion(self, request, obj, message): Used to log changing events in the admin—helpful for audit trails.​
+
+formfield_for_dbfield(self, db_field, request, **kwargs): Allows customization of how each model field is rendered in the admin forms.​
