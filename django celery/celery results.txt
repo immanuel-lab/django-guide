@@ -1,0 +1,38 @@
+django-celery-results - Using the Django ORM/Cache as a result backend¶
+The https://pypi.org/project/django-celery-results/ extension provides result backends using either the Django ORM, or the Django Cache framework.
+
+To use this with your project you need to follow these steps:
+
+Install the https://pypi.org/project/django-celery-results/ library:
+
+pip install django-celery-results
+Add django_celery_results to INSTALLED_APPS in your Django project’s settings.py:
+
+INSTALLED_APPS = (
+    ...,
+    'django_celery_results',
+)
+Note that there is no dash in the module name, only underscores.
+
+Create the Celery database tables by performing a database migrations:
+
+python manage.py migrate django_celery_results
+Configure Celery to use the https://pypi.org/project/django-celery-results/ backend.
+
+Assuming you are using Django’s settings.py to also configure Celery, add the following settings:
+
+CELERY_RESULT_BACKEND = 'django-db'
+When using the cache backend, you can specify a cache defined within Django’s CACHES setting.
+
+CELERY_RESULT_BACKEND = 'django-cache'
+
+# pick which cache from the CACHES setting.
+CELERY_CACHE_BACKEND = 'default'
+
+# django setting.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}

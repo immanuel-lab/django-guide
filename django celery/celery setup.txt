@@ -1,0 +1,197 @@
+
+Celery is a task queue used to run background jobs outside the request/response cycle.
+
+USE CASES:
+
+Sending emails
+
+Sending OTPs
+
+Generating reports
+
+Cleaning database records
+
+Running scheduled/cron jobs
+
+
+Celery is independent
+
+CELERY CAN BE USED WITH:
+
+Flask
+
+FastAPI
+
+Plain Python scripts
+
+Django
+
+Any custom Python project
+
+Django is not required.
+
+
+WHAT CELERY ACTUALLY NEEDS:
+
+Python
+
+A message broker (Redis, RabbitMQ, etc.)
+
+A worker process to run tasks
+
+
+
+Aspect	What it means
+tasks.py	File holding Celery tasks for an app
+shared_task	 Registers the function as a Celery task
+autodiscover_tasks()	Celery automatically finds tasks.py in each app
+delay()	     -Sends task to Redis broker
+Worker	Pulls task from Redis and executes it
+What Is Celery Beat?
+
+Celery Beat is a separate process that runs periodic or scheduled tasks.
+
+Think of it like:
+
+cron job
+
+but integrated with Celery
+
+and stored in your Django settings
+
+Beat doesn't execute tasks itself — it only schedules them.
+
+
+
+1.pip install celery
+
+
+2.myproject/
+    myproject/
+        __init__.py
+        settings.py
+        urls.py
+        celery.py     <- we will create this
+    app/
+        tasks.py      <- we will create this
+		
+		
+3.file:
+proj/proj/celery.py
+
+import os
+
+from celery import Celery
+
+# Set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proj.settings')
+
+app = Celery('proj')
+
+# Using a string here means the worker doesn't have to serialize
+# the configuration object to child processes.
+# - namespace='CELERY' means all celery-related configuration keys
+#   should have a `CELERY_` prefix.
+#Why use namespace='CELERY'?
+#Because without this namespace, Celery would try to read all Django settings, which is messy.
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Load task modules from all registered Django apps.
+app.autodiscover_tasks()
+
+#1. Celery looks at Django's INSTALLED_APPS
+#2.For each app, it checks if a file named tasks.py exists
+#3. If the file exists, Celery imports it
+#4. Tasks become available to workers
+#Why do we need autodiscover_tasks()?
+
+#Without it, you would need to import every tasks module manually:
+
+#from app1.tasks import *
+#from app2.tasks import *
+#from blog.tasks import *
+
+
+4. Add Celery in init.py
+
+myproject/myproject/__init__.py
+
+from .celery import app as celery_app
+
+__all__ = ("celery_app",)
+
+
+
+
+
+Why is this needed? (VERY IMPORTANT)
+✔ Reason 1: Ensures Celery starts when Django starts
+
+Django imports your project package (myproject) when it starts.
+
+By placing Celery app import inside __init__.py, you ensure:
+
+The Celery app (celery_app) is created
+
+Celery tasks are registered
+
+Celery knows the Django settings
+
+Celery autodiscovery (autodiscover_tasks()) runs
+
+If you don't put this here, Celery may not initialize properly.
+
+
+
+
+
+
+5. Create a task
+
+Inside your Django app (example: app/tasks.py):
+
+from celery import shared_task
+import time
+
+@shared_task
+def test_task():
+    time.sleep(5)
+    print("Celery task executed")
+    return "Done"
+	
+	
+#Task with retry logic	
+@shared_task(bind=True, max_retries=3)
+def api_call(self):
+    try:
+        # risky code
+        pass
+    except Exception as exc:
+        self.retry(exc=exc, countdown=10)
+		
+Celery wraps your function in a Task object, which includes:
+
+.delay()
+
+.apply_async()
+
+.retry(), etc.
+
+	
+	
+	
+	
+	
+6. Configure Redis broker in settings.py
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+
+This does NOT create new Django settings.
+You are simply defining configuration variables in Django settings, and Celery is reading them.
+
+So this line does not modify Django, it only reads from Django.
+
+
+7. Start workers
+Worker:
+celery -A myproject worker -l info
