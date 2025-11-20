@@ -1,0 +1,36 @@
+custom manager in django
+
+
+
+You said:
+custom manager in django
+ChatGPT said:
+A custom manager in Django lets you add extra methods or modify the default query behavior of your model’s objects.
+
+By default, every Django model has a manager called objects (an instance of models.Manager).
+You can replace it or add your own to customize queries or create shortcuts.
+
+✅ Basic Example
+from django.db import models
+
+class ActiveManager(models.Manager):
+    def get_queryset(self):
+        # Only return active users
+        return super().get_queryset().filter(is_active=True)
+
+
+class CustomUser(models.Model):
+    user_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    is_active = models.BooleanField(default=True)
+
+    # Custom manager
+    active_users = ActiveManager()
+    # Default manager
+    objects = models.Manager()
+Usage:
+# Returns only active users
+CustomUser.active_users.all()
+
+# Returns all users
+CustomUser.objects.all()
