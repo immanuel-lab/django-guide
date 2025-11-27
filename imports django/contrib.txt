@@ -1,22 +1,26 @@
+
+
+1.DJANGO.CONTRIB.AUTH
 from django.contrib.auth.models import User, Group, Permission, AbstractUser, AbstractBaseUser
 from django.contrib.auth import get_user_model, authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.tokens import default_token_generator.make_token(user),default_token_generator.check_token(user,token)
 
 
-
-2.django.contrib.admin – Admin interface
+2.DJANGO.CONTRIB.ADMIN – Admin interface
 from django.contrib import admin
 from django.contrib.admin import site, ModelAdmin, register
 
 
 
-3. django.contrib.sessions – Session framework
+3. DJANGO.CONTRIB.SESSIONS – Session framework
 from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
 
 
-4.django.contrib.messages – Flash messages
+4.DJANGO.CONTRIB.MESSAGES – Flash messages
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.messages import constants as message_constants

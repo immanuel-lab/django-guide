@@ -1,0 +1,45 @@
+when django media file gets deleted in the admin panel,it doesnt get deleted in the computer file directory..
+..To do that we use signals
+
+
+# pip install django-cleanup
+
+
+
+
+
+
+signals.py
+
+Create a separate file for signals.
+
+import os
+from django.db.models.signals import post_delete, pre_save
+from django.dispatch import receiver
+from .models import Document
+
+# DELETE FILE FROM DISK WHEN MODEL INSTANCE IS DELETED
+@receiver(post_delete, sender=Document)
+def delete_file_on_instance_delete(sender, instance, **kwargs):
+    #check if file is there in db
+    if instance.file:
+	#check if file is there in drive or computer
+        if os.path.isfile(instance.file.path):
+		#check if file is removed
+		    os.remove(instance.file.path)
+			
+			
+			
+Make sure your signals file loads.
+
+apps.py
+from django.apps import AppConfig
+
+class MyAppConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'myapp'
+
+    def ready(self):
+        import myapp.signals
+		
+		

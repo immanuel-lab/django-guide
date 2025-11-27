@@ -1,0 +1,41 @@
+In Django, you can use signals to detect when a user logs in or logs out using the built-in authentication signals:
+
+user_logged_in → fired when a user logs in
+
+user_logged_out → fired when a user logs out
+
+
+
+# myapp/signals.py
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
+from django.utils.timezone import now
+
+# Fired when user logs in
+@receiver(user_logged_in)
+def user_logged_in_handler(sender, request, user, **kwargs):
+    print(f"User {user.username} logged in at {now()}")
+    # Example: save last login somewhere
+    user.profile.last_login_signal = now()
+    user.profile.save()
+
+# Fired when user logs out
+@receiver(user_logged_out)
+def user_logged_out_handler(sender, request, user, **kwargs):
+    print(f"User {user.username} logged out at {now()}")
+    # Example: update last logout time
+    user.profile.last_logout_signal = now()
+    user.profile.save()
+
+	
+	
+	
+# myapp/apps.py
+from django.apps import AppConfig
+
+class MyappConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'myapp'
+
+    def ready(self):
+        import myapp.signals  # Ensures signals are registered

@@ -1,0 +1,126 @@
+Django 6.0 introduces a new built-in background task framework called Django Task Queue, which finally gives Django a native way to run background jobs.
+
+This is a brand-new feature in Django 6, and it removes the need for Celery in many cases.
+
+Let me explain it clearly.
+
+✅ Django 6.0 – Built-in Background Tasks
+
+Django 6 includes a new system:
+
+✔ Task model
+✔ @task decorator (built-in!)
+✔ Background workers
+✔ Scheduled tasks (cron-like)
+✔ Retry support
+✔ Uses database as the queue (no Redis needed)
+
+This framework is called Django Task Queue.
+
+🔥 Example: Django 6 Built-in Task
+tasks.py
+from django.core.tasks import task
+
+@task
+def send_welcome_email(user_id):
+    # long-running logic goes here
+    ...
+
+Run it:
+send_welcome_email.delay(user.id)
+
+
+Yes — .delay() works just like Celery.
+
+🔧 Start the worker
+python manage.py taskworker
+
+
+The worker pulls tasks from Django’s database and runs them asynchronously.
+
+🚀 Benefits of Django’s built-in task framework
+✔ No need for Redis / RabbitMQ
+
+Everything is stored in Django’s own DB (task queue table).
+
+✔ No external dependency → simpler deployment
+
+Perfect for small to medium apps.
+
+✔ Works like Celery
+
+.delay(), retries, scheduling, decorators.
+
+✔ First-class Django integration
+
+Uses ORM, settings, migrations, Admin, signals, etc.
+
+❗ Important: Does this replace Celery?
+
+Not completely.
+
+Django 6 Task Queue is great for:
+
+small and medium apps
+
+sending emails
+
+scheduled cleanups
+
+image processing
+
+user notifications
+
+basic background tasks
+
+Celery is still better for:
+
+high-volume queues
+
+millions of tasks
+
+advanced routing
+
+distributed systems
+
+multiple worker types
+
+large scale asynchronous pipelines
+
+🧠 Summary
+Feature	Django 6 Built-in	Celery
+Requires Redis	❌ No	✔ Yes
+Uses @task decorator	✔ Yes	✔ Yes
+.delay() method	✔ Yes	✔ Yes
+Setup difficulty	⭐ Easy	⚠ Hard
+Performance	Medium	Very High
+Best for	Small/medium apps	Large enterprise apps
+
+
+
+
+
+
+
+
+Django’s @task:
+
+✔ Allows you to declare a task
+✔ Allows you to queue it using .delay()
+✔ Stores tasks in a queue backend (default: immediate)
+
+But…
+
+❌ Django 6 does NOT include:
+
+a worker process
+
+scheduling (crontab)
+
+distributed task running
+
+retries by default
+
+queue routing
+
+advanced pipeline support

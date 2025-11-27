@@ -1,0 +1,265 @@
+
+
+Django signals let different parts of your app communicate without tightly coupling them.
+They are triggered when certain actions happen (like saving a model, user login, etc.), and
+ you can write receiver functions to respond to those actions automatically.
+
+
+
+
+1. Model Signals (most commonly used)
+
+These signals fire when model instances are created, saved, or deleted.
+
+Signal	Trigger
+pre_init	Before a model instance is created (before __init__).
+post_init	After model instance is created (after __init__).
+pre_save	Before saving an object (instance.save() called).
+post_save	After saving an object (created or updated).
+pre_delete	Before deleting an object.
+post_delete	After deleting an object.
+m2m_changed	When a ManyToMany field is changed (add/remove/clear).
+pre_migrate	Before migrations run.
+post_migrate	After migrations run.
+🔵 2. Request/Response Signals
+
+Useful for middleware-like behavior without writing middleware.
+
+Signal	Trigger
+request_started	When any HTTP request starts.
+request_finished	When the response is sent.
+got_request_exception	When a view raises an exception.
+🔵 3. User Authentication Signals
+
+These fire during login/logout.
+
+Signal	Trigger
+user_logged_in	After a user logs in.
+user_logged_out	After a user logs out.
+user_login_failed	When login fails.
+🔵 4. Database Signals
+Signal	Trigger
+connection_created	When a new DB connection is created.
+🔵 5. Django Admin Signals
+Signal	Trigger
+pre_save (admin)	Before saving object in admin. (same as model signal)
+post_save (admin)	After saving object in admin. (same as model signal)
+pre_delete	Before deleting via admin.
+post_delete	After deleting via admin.
+pre_add / post_add (m2m_changed)	For admin ManyToMany actions.
+🔵 6. Management Command Signals
+Signal	Trigger
+pre_migrate	Before migrate command runs.
+post_migrate	After migrate command runs.
+🔵 7. Django Cache Signals
+
+(Not built-in, but provided by certain backends like Redis cache addons.)
+
+
+8.setting_changed Signal (Django)
+
+Django provides this signal when a setting value is changed dynamically, usually during tests or when some code overrides settings with override_settings.
+
+Signal location:
+from django.test.signals import setting_changed
+
+🔥 When does setting_changed fire?
+
+It fires when:
+
+A setting is modified using override_settings
+
+A setting is modified using modify_settings
+
+Sometimes internal Django test tools adjust settings
+
+⚠️ It does not fire when you edit settings.py and restart the server — that is static.
+
+
+
+
+core/apps.py
+def ready(self):
+    import core.signals
+
+
+@receiver is a decorator in Django that connects your function to a signal.	
+
+@receiver(signal, *, sender=None, weak=True, dispatch_uid=None)
+Parameter	Meaning
+signal	The signal(s) to listen for
+sender	Only run when signal is sent from this model/class
+weak	Internal optimization (leave default True)
+dispatch_uid	Prevent duplicate connections
+
+
+
+
+
+
+
+
+Most Commonly Used in Real Projects
+✔ post_save
+
+→ Create profile, send email, log activity.
+
+✔ post_delete
+
+→ Delete associated files (images, logs).
+
+✔ m2m_changed
+
+→ Update counts when many-to-many relations change.
+
+✔ user_logged_in / user_logged_out
+
+→ Track last login/logout, store logs.
+
+
+
+
+
+
+
+Without @receiver (manual way)
+from django.db.models.signals import post_save
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        print("Profile created!")
+
+post_save.connect(create_profile, sender=User)
+
+
+You had to manually connect like:
+
+post_save.connect(function, sender=Model)
+
+
+
+
+
+
+With @receiver (easy way)
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        print("Profile created!")
+
+
+Now Django automatically connects the signal using the decorator.
+
+
+
+Here�s a clear and simple explanation of each parameter in:
+
+def create_profile(sender, instance, created, **kwargs):
+
+
+This function is a receiver for post_save (or pre_save) model signal.
+
+?? 1. sender
+
+What triggered the signal.
+
+Usually the model class that was saved.
+
+Example: if User model is saved:
+
+sender == User
+
+
+So sender tells you which model caused the signal.
+
+?? 2. instance
+
+The actual object that was saved.
+
+Example:
+
+user = User.objects.create(username="john")
+
+
+Inside the signal:
+
+instance.username  # "john"
+
+
+This is the real model instance that got created/updated.
+
+?? 3. created
+
+Boolean � True if a new object was created, False if updated
+
+created = True ? object created (first save)
+
+created = False ? object updated (second save onwards)
+
+Example:
+
+User.objects.create(...) ? created = True
+user.save() again ? created = False
+
+
+This is why we use:
+
+if created:
+    Profile.objects.create(user=instance)
+
+
+To avoid creating multiple profiles.
+
+?? 4. **kwargs
+
+Extra information that depends on the signal type.
+
+For post_save, kwargs may contain:
+
+raw ? True if saving from fixture (ignore)
+
+using ? DB alias
+
+update_fields ? fields updated using update_fields=['name']
+
+Example values:
+
+kwargs = {
+    'raw': False,
+    'using': 'default',
+    'update_fields': None
+}
+
+
+You rarely need these.
+
+?? Example of what each param looks like
+
+If a new user is created:
+
+sender       = <class 'django.contrib.auth.models.User'>
+instance     = <User: john>
+created      = True
+kwargs       = { 'raw': False, 'using': 'default', 'update_fields': None }
+
+
+If an existing user is updated:
+
+created = False
+
+
+Everything else is same.
+
+?? Summary Table
+Parameter	Meaning
+sender	Model class that sent the signal
+instance	The actual saved model object
+created	True if created, False if updated
+**kwargs	Extra info (raw, using, update_fields, etc.)
+
+
+
+
