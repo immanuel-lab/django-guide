@@ -1,5 +1,21 @@
 
 
+pip install virtualenv
+
+
+to create
+virtualenv envname
+
+
+
+
+to activate
+envname\Scripts\activate
+
+
+
+
+
 django-admin startproject proname-starts a new project
 django-admin help --commands
 django-admin help runserver

@@ -9,3 +9,19 @@ os.environ('username')
 
 in .env file
 username=immanuel
+
+
+
+PREFERREED
+
+pip install python-decouple
+
+from decouple import config,
+
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+Argument,Type,Purpose
+option,String,The name of the environment variable to look up.
+default,Any,The value to return if the variable is not found.
+cast,Callable,"A function/type to transform the resulting string (e.g., int, bool, Csv())."

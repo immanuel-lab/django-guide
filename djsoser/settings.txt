@@ -1,6 +1,54 @@
 
 
+DJOSER = {
+    # General User Model Settings
+    'USER_ID_FIELD': 'id', 
+    
+    # Frontend URL Configuration (Used for links sent in emails)
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    
+    # Email Settings (Enable/Disable emails)
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_PASSWORD_RESET_EMAIL': True,
+    
+    # Serializers (Crucial for linking to your app and JWT)
+    'TOKEN_MODEL': None, # Crucial: Disables Djoser's default token model
+    'SERIALIZERS': {
+        # Custom User Serializers (MUST use your app name: djoserpractise)
+        'user_create': 'djoserpractise.serializers.UserCreateSerializer',
+        'user': 'djoserpractise.serializers.UserSerializer',
+        'current_user': 'djoserpractise.serializers.UserSerializer',
+        
+        # Authentication Serializers (For JWT token creation)
+        'token_create': 'djoser.serializers.TokenCreateSerializer', # Used for login (/jwt/create/)
+        'token': 'djoser.serializers.TokenSerializer', 
+    },
+    
+    # Permission Settings
+    'PERMISSIONS': {
+        'activation': ['rest_framework.permissions.AllowAny'],
+        'password_reset': ['rest_framework.permissions.AllowAny'],
+        'set_password': ['rest_framework.permissions.IsAuthenticated'],
+        'username_reset': ['rest_framework.permissions.AllowAny'],
+        'set_username': ['rest_framework.permissions.IsAuthenticated'],
+        'user_create': ['rest_framework.permissions.AllowAny'],
+        'user_delete': ['rest_framework.permissions.IsAuthenticated'],
+        'user': ['rest_framework.permissions.IsAuthenticated'],
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
+    },
 
+    # JWT Authentication Configuration (Simple JWT integration)
+    'JWT_AUTH': {
+        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), 
+        'REFRESH_TOKEN_LIFETIME': timedelta(days=1),   
+        'ROTATE_REFRESH_TOKENS': True, # Enhances security
+        'TOKEN_OBTAIN_SERIALIZER': 'djoser.serializers.TokenCreateSerializer',
+        'TOKEN_REFRESH_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenRefreshSerializer',
+        'TOKEN_VERIFY_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenVerifySerializer',
+    }
+}
 
 
 DJOSER = {

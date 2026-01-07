@@ -1,0 +1,56 @@
+This is a classic "gotcha" in Django. When you set is_active = False as the default value in your model, that default applies to every user created—including the superuser you just made via the command line.
+
+Since Django's authentication system checks if is_active is True before allowing a login, you are currently locked out.
+
+Here are the two ways to fix this:
+
+
+Method 1: Use the Django Shell (Easiest)
+You can manually flip the switch for your superuser using the interactive shell. Run the following commands in your terminal:
+
+Open the shell:
+
+Bash
+
+python manage.py shell
+
+
+Update the user:
+
+Python
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+# Find your superuser by username
+u = User.objects.get(username='your_admin_username') 
+u.is_active = True
+u.save()
+
+
+
+
+Method 2: Fix the Custom Manager (Best Practice)
+If you are using a Custom User model, the "correct" way to prevent this in the future is to modify your UserManager. The create_superuser method should explicitly force is_active to True regardless of the model default.
+
+Update your models.py manager like this:
+
+Python
+
+class MyUserManager(BaseUserManager):
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        # Add this line to ensure superusers can always log in
+        extra_fields.setdefault('is_active', True) 
+
+        return self.create_user(email, password, **extra_fields)
+
+		
+		Why is this happening?
+Django's default Model.objects.create() (which create_user uses) pulls the default values 
+defined on your fields. If your model looks like this: is_active = models.BooleanField(default=False)
+
+Then every user starts "inactive" until something (like an email verification or an admin) turns them 
+on. By updating your create_superuser method as shown above, you ensure that the command line tool
+ bypasses that "inactive" default.

@@ -1,0 +1,77 @@
+
+
+no need to add simple_jwt in installed apps
+
+INSTALLED_APPS = [
+    "unfold",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+      'djoser',
+     'djoserpractise',
+     'django_countries',
+    'phonenumber_field',
+    'corsheaders',
+      ]
+
+
+
+
+
+
+
+
+
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
+
+
+
+
+
+
+
+
+
+DJOSER = {
+    'USER_ID_FIELD': 'id', # Or 'username', depending on your user model
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    # Use the JWT serializer/viewset provided by Djoser for token management
+    'TOKEN_MODEL': None, # Disable Djoser's default Token model
+    # 'SERIALIZERS': {
+    #     'user_create': 'djoserpractise.serializers.UserCreateSerializer', # Recommended
+    #     'user': 'djoserpractise.serializers.UserSerializer', # Recommended
+    #     'current_user': 'djoserpractise.serializers.UserSerializer',
+    #     # Set the token/JWT serializers
+    #     'token': 'djoser.serializers.TokenSerializer', # Not strictly needed if using simple_jwt
+    #     'token_create': 'djoser.serializers.TokenCreateSerializer', # Use this for login
+    # },
+    'PERMISSIONS': {
+        'activation': ['rest_framework.permissions.AllowAny'],
+    },
+    # Set the JWT authentication method
+    'JWT_AUTH': {
+        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Set a lifetime
+        'REFRESH_TOKEN_LIFETIME': timedelta(days=1),   # Set a lifetime
+        'ROTATE_REFRESH_TOKENS': True, # Optional
+        # Set this to True to get the JWT token and the user data in the response
+        'TOKEN_OBTAIN_SERIALIZER': 'djoser.serializers.TokenCreateSerializer',
+        'TOKEN_REFRESH_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenRefreshSerializer',
+    }
+}

@@ -1,8 +1,23 @@
 Djoser Endpoints:
 Djoser provides a range of endpoints for user authentication and management. Here are all the available endpoints:
-/users/: List of all users (requires admin permissions)
-/users/me/: Current user details
-/users/confirm/: Confirm user registration
+/users/: register user(requires admin permissions)
+/users/me/: Current user details/Use this endpoint to retrieve/update the authenticated user.All GET,PUT,PATCH,DELETE can be used
+
+✅ GET /auth/users/me        → Redirects to /auth/users/me/ (safe)
+✅ POST /auth/jwt/create     → Redirects to /auth/jwt/create/ (safe)  
+❌ DELETE /auth/users/me     → FAILS (can't redirect DELETE)
+✅ DELETE /auth/users/me/    → Works directly
+
+
+
+
+
+
+
+
+
+
+/users/activation/:Use this endpoint to activate user account.
 /users/resend_activation/: Resend activation email
 /users/set_password/: Set new password
 /users/reset_password/: Reset password
@@ -21,3 +36,76 @@ Some endpoints require authentication or admin permissions.
 Some endpoints require specific data to be sent in the request body (e.g., username, password, new_password, etc.).
 The exact endpoint URLs may vary depending on your project's URL configuration.
 By using these endpoints, you can manage user authentication and accounts in your Django Rest Framework application.
+
+
+
+
+Use this endpoint to retrieve/update the authenticated user.
+
+Default URL: /users/me/
+
+Method
+
+Request
+
+Response
+
+GET
+
+–
+
+HTTP_200_OK
+
+{{ User.USERNAME_FIELD }}
+
+{{ User._meta.pk.name }}
+
+{{ User.REQUIRED_FIELDS }}
+
+PUT
+
+{{ User.REQUIRED_FIELDS }}
+
+HTTP_200_OK
+
+{{ User.USERNAME_FIELD }}
+
+{{ User._meta.pk.name }}
+
+{{ User.REQUIRED_FIELDS }}
+
+HTTP_400_BAD_REQUEST
+
+{{ User.REQUIRED_FIELDS }}
+
+PATCH
+
+{{ User.FIELDS_TO_UPDATE }}
+
+
+Method
+
+Request
+
+Response
+
+DELETE
+
+current_password
+
+HTTP_204_NO_CONTENT
+
+HTTP_400_BAD_REQUEST
+
+current_password
+
+HTTP_200_OK
+
+{{ User.USERNAME_FIELD }}
+
+{{ User._meta.pk.name }}
+
+{{ User.REQUIRED_FIELDS }}
+
+HTTP_400_BAD_REQUEST
+
