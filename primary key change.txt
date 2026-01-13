@@ -1,0 +1,57 @@
+By default, Django adds an auto-incrementing field named id to each model to serve as its primary key. 
+The specific field type for this automatic primary key depends on your project's configuration:
+Default Type: In modern Django versions (3.2 and later, including 2026), the default field type is BigAutoField, which is a 64-bit integer.
+Legacy/Configurable Type: Previously, the default was a standard 32-bit AutoField. You can change this behavior globally in your settings.py file using the DEFAULT_AUTO_FIELD setting or per-app in apps.py via default_auto_field.
+Usage Alias: Regardless of the field's actual name (e.g., if you rename it to student_id), you can always access it using the pk property on a model instance. 
+If you explicitly define a field with primary_key=True, Django will not automatically add the id field. For projects using Django 5.2 or later, you can also define composite primary keys using the CompositePrimaryKey virtual field. 
+
+
+
+
+undefined
+undefined
+undefined
+7 sites
+Models - Django documentation
+Quick example¶ ... first_name and last_name are fields of the model. Each field is specified as a class attribute, and each attrib...
+
+Django documentation
+Composite primary keys - Django documentation
+Composite primary keys¶ New in Django 5.2. In Django, each model has a primary key. By default, this primary key consists of a sin...
+
+Django documentation
+Django ORM Course | Primary Keys
+20 Sept 2022 — hello and welcome my name is Xander welcome to the OM Mastery. course level one for beginners. in this tutorial. we turn our atten...
+
+
+
+
+
+how to change in settings if i want it to be AutoField
+
+
+To change the default primary key field to a standard 32-bit AutoField in Django (as of 2026), you must update your configuration at the global or app level.
+
+
+1. Global Change (Project-wide)
+Add or modify the following setting in your settings.py file. This ensures all models across your project use AutoField unless specified otherwise. 
+python
+# settings.py
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+Use code with caution.
+
+2. App-Specific Change
+If you only want to change the behavior for a specific app, update that app's configuration in its apps.py file. 
+python
+# your_app/apps.py
+from django.apps import AppConfig
+
+class YourAppConfig(AppConfig):
+    default_auto_field = 'django.db.models.AutoField'
+    name = 'your_app'
+Use code with caution.
+
+Why this is necessary
+Since Django 3.2, new projects are generated with DEFAULT_AUTO_FIELD set to BigAutoField (a 64-bit integer) by default. Manually setting it to AutoField reverts it to the legacy 32-bit integer behavior used in older versions. 
+Note: If you are changing this for an existing project with existing tables, you will need to run python manage.py makemigrations and python manage.py migrate to apply the database schema changes. 
+These technical guides explain how to change Django's default primary key settings using "AutoField" at the global or app level.

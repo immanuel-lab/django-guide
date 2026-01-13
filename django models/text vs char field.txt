@@ -1,0 +1,18 @@
+The primary difference between Django's CharField and TextField is that CharField is for short, 
+fixed-length strings and requires a max_length attribute, while TextField is for large, 
+unbounded text and does not enforce a length limit at the database level. 
+
+
+
+Feature 	         models.CharField	                      
+Length	              Requires a max_length parameter, which is enforced at the database level.
+Database Type	        Stored as a VARCHAR column in SQL databases.	
+Use Cases	          Ideal for usernames, titles, names, or codes where the length is predictable.	
+
+
+
+ models.TextField
+ 
+ 	Does not require max_length, designed for arbitrarily large amounts of text.
+	Stored as a TEXT column in SQL databases.
+	Suitable for blog post content, comments, or reviews where length varies significantly
